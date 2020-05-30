@@ -1,0 +1,44 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthoritativeService } from '../authoritative.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-add-suspect',
+  templateUrl: './add-suspect.component.html',
+  styleUrls: ['./add-suspect.component.css']
+})
+export class AddSuspectComponent implements OnInit {
+  suspect: {
+    fullName: string,
+    gender: string,
+    tags: any,
+  } = {
+      fullName: "",
+      gender: "",
+      tags: ""
+    }
+  constructor(private authoritativeService: AuthoritativeService, private router: Router) { }
+
+  ngOnInit() {
+  }
+
+  addSuspect = () => {
+    this.suspect.tags = this.suspect.tags.split(",")
+    this.authoritativeService.addSuspect(this.suspect).subscribe(
+      (data: any) => {
+        if (data.err) {
+          alert(data.err.message)
+        } else if (data.succ) {
+          alert(data.succ.message)
+          this.router.navigate(["authoritative/suspects/" + data.suspect._id])
+        }
+      },
+      (err: any) => {
+        alert(err)
+      },
+      () => {
+
+      }
+    )
+  }
+}

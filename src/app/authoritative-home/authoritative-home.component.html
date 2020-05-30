@@ -1,0 +1,30 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Welcome to Authoritative Dashboard</h1>
+        <!-- 
+        <div class='bar'>
+            <h1>Cameras</h1>
+        </div>
+        <div class='cameras'>
+            <div *ngFor="let camera of cameras" class='camera' routerLink="../cameras/{{camera._id}}">
+                <p class='id'>ID: {{camera._id}}</p>
+                <p class='location'>Location: {{camera.latitude | number : '.2' }},{{camera.longitude| number : '1.1' }}</p>
+                <img src="{{camera.url}}" />
+            </div>
+        </div>
+         -->
+        <div class='bar'>
+            <h1>Manage Suspects</h1>
+            <div class='buttons'>
+                <button routerLink="../suspects/add">Add Suspect</button>
+            </div>
+        </div>
+        <div class='suspects'>
+            <div *ngFor="let suspect of suspects" class='suspect' routerLink="../suspects/{{suspect._id}}">
+                <h3>{{suspect.fullName}}</h3>
+                <p class='id' style='font-size:10px'>ID: {{suspect._id}}</p>
+                <img src="{{suspect.pictures[0]}}" *ngIf="suspect.pictures.length > 0" />
+            </div>
+        </div>
+    </div>
+</div>

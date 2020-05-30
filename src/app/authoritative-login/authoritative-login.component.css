@@ -1,0 +1,11 @@
+form>* {
+    display: block;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type='password'],
+form button {
+    padding: 5px 10px;
+    margin: 10px 0;
+}

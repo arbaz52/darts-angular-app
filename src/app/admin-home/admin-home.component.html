@@ -1,0 +1,34 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Welcome to Admin Dashboard</h1>
+        <div class='bar'>
+            <h1>Manage Cameras</h1>
+            <div class='buttons'>
+                <button routerLink="../cameras/add">Add Camera</button>
+            </div>
+        </div>
+        <div class='cameras'>
+            <div *ngFor="let camera of cameras" class='camera' routerLink="../cameras/{{camera._id}}">
+                <p class='id'>ID: {{camera._id}}</p>
+                <p class='location'>Location: {{camera.latitude | number : '.2' }},{{camera.longitude| number : '1.1' }}</p>
+                <img src="{{camera.url}}" />
+                <p>Assigned to server: {{camera.serverId || "No server"}}</p>
+            </div>
+        </div>
+        <div class='bar'>
+            <h1>Manage Servers</h1>
+            <div class='buttons'>
+                <button routerLink="../servers/add">Add Server</button>
+            </div>
+        </div>
+        <div class='servers'>
+            <div *ngFor="let server of servers" class='server' routerLink="../servers/{{server._id}}">
+                <h3>{{server.name}}</h3>
+
+                <p class='id'>ID: {{server._id}}</p>
+                <p class='location'>Location: {{server.latitude | number : '.2' }},{{server.longitude| number : '1.1' }}</p>
+                <p>Connected Cameras: {{ server.cameras.length }}</p>
+            </div>
+        </div>
+    </div>
+</div>

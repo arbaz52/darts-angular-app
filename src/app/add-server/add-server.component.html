@@ -1,0 +1,35 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Add a new Server </h1>
+        <p>(Double click on map to choose location)</p>
+        <div class='grid-form'>
+            <agm-map class='map' (mapClick)="choseThisLocation($event)" [latitude]="comsats.latitude" [longitude]="comsats.longitude" [zoom]="16">
+                <agm-marker [longitude]="locationCoords.longitude" [latitude]="locationCoords.latitude" *ngIf="locationSelected"></agm-marker>
+            </agm-map>
+            <form>
+                <!-- for styling -->
+                <div>
+                    <label>Name: </label>
+                    <input type='text' [(ngModel)]="name" name='name' />
+                    <label>Url: </label>
+                    <input type='url' [(ngModel)]="url" name='url' />
+                    <label>Location </label>
+
+                    <!-- filler -->
+                    <label for=""></label>
+
+                    <label>Longitude: </label>
+                    <input type='number' [(ngModel)]="locationCoords.longitude" name='longitude' />
+                    <label>Latitude: </label>
+                    <input type='number' [(ngModel)]="locationCoords.latitude" name='latitude' />
+
+                    <!-- filler -->
+                    <label></label>
+
+                    <button (click)="addServer()">Add Server</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

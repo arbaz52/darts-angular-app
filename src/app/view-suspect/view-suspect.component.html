@@ -1,0 +1,47 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Viewing Suspect: {{suspect.fullName}}</h1>
+        <p>{{suspect._id}}</p>
+        <div class='frame'>
+            <div class='image-viewer'>
+                <div class='current-image'>
+                    <img src="{{suspect.pictures[0]}}" style="max-height: 300px" />
+                </div>
+                <hr>
+                <h3>All Pictures: </h3>
+                <p>Upload pictures:</p>
+                <input type="file" ng2FileSelect [uploader]="uploader" multiple (onFileSelected)="uploadFiles()" />
+                <div class='all-images'>
+                    <div *ngFor="let image of suspect.pictures">
+                        <img src="{{image}}" />
+                    </div>
+                </div>
+            </div>
+            <form class='suspect-details'>
+                <!-- can edit camera details here  -->
+                <h1>Suspect Details</h1>
+                <div>
+
+                    <label>Full Name: </label>
+                    <input type='text' [(ngModel)]="suspect.fullName" name='fullName' />
+
+
+                    <label>Gender: </label>
+                    <select [(ngModel)]="suspect.gender" name="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+
+                    <label>Tags (separated by commas): </label>
+                    <textarea [(ngModel)]="tags" name='tags'></textarea>
+
+                    <label for=""></label>
+                    <!-- <button (click)="deleteServer()" style="background-color:#e74c3c; color: white;">Delete</button> -->
+
+                    <!-- <button (click)="updateServer()" style="background-color:#2980b9; color: white;">Update</button> -->
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Viewing Server {{ '(' + server.name + ')'}}: {{server._id}}</h1>
+        <div class='frame'>
+
+            <form class='camera-details'>
+                <!-- can edit camera details here  -->
+                <h1>Server Details</h1>
+                <div>
+                    <label>Name: </label>
+                    <input type='text' [(ngModel)]="server.name" name='name' />
+                    <label>Url: </label>
+                    <input type='url' [(ngModel)]="server.url" name='url' />
+                    <label>Location </label>
+
+                    <!-- filler -->
+                    <label for=""></label>
+
+                    <label>Longitude: </label>
+                    <input type='number' [(ngModel)]="server.longitude" name='longitude' />
+                    <label>Latitude: </label>
+                    <input type='number' [(ngModel)]="server.latitude" name='latitude' />
+
+
+                    <button (click)="deleteServer()" style="background-color:#e74c3c; color: white;">Delete</button>
+
+                    <button (click)="updateServer()" style="background-color:#2980b9; color: white;">Update</button>
+                </div>
+            </form>
+            <agm-map (mapClick)="choseThisLocation($event)" class='location-on-map' [latitude]="server.latitude" [longitude]="server.longitude" [zoom]="16">
+                <agm-marker [longitude]="server.longitude" [latitude]="server.latitude"></agm-marker>
+            </agm-map>
+            <div class='cameras-holder'>
+                <!-- place cameras here -->
+                <h2>Cameras connected to this server: {{server.cameras.length}}</h2>
+                <div class='cameras'>
+                    <div *ngFor="let camera of server.cameras" class='camera' routerLink="../../cameras/{{camera._id}}">
+                        <p class='id'>ID: {{camera._id}}</p>
+                        <p class='location'>Location: {{camera.latitude | number : '.2' }},{{camera.longitude| number : '1.1' }}</p>
+                        <img src="{{camera.url}}" />
+                        <p>Assigned to server: {{camera.serverId || "No server"}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

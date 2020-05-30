@@ -1,0 +1,12 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Login as Admin</h1>
+        <form>
+            <label>Email:</label>
+            <input type='email' name="email" [(ngModel)]="email" placeholder="Enter email here"/>
+            <label>Password:</label>
+            <input type='password' name="password" [(ngModel)]="password" placeholder="Enter password here" />
+            <button (click)="login()">Login as admin</button>
+        </form>
+    </div>
+</div>

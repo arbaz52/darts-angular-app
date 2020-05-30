@@ -1,0 +1,92 @@
+* {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+#container {
+    margin-top: 100px;
+    padding-top: 10px;
+    padding-bottom: 100px;
+    height: calc(100vh - 100px);
+    overflow: auto;
+}
+
+app-root {
+    overflow: auto;
+}
+
+header {
+    height: 100px;
+    background: #333;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header .wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 80% !important;
+    margin: auto !important;
+}
+
+header .wrapper * {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+header .wrapper>* {
+    line-height: 100px;
+}
+
+header .wrapper ul {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 0 10px;
+}
+
+header .wrapper ul li {
+    padding: 0 10px;
+}
+
+header .wrapper ul li:hover {
+    background: #eee;
+    color: #333;
+    cursor: pointer;
+}
+
+header .wrapper ul li:hover a {
+    color: #333;
+    display: block;
+}
+
+header .wrapper ul li * {
+    text-decoration: none;
+    color: white;
+}
+
+header .title {
+    font-size: 30px;
+    ;
+}
+
+#container .wrapper {
+    width: 80%;
+    margin: auto;
+}
+
+button {
+    padding: 10px 5px;
+    border-radius: 10px;
+    ;
+}

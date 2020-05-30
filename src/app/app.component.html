@@ -1,0 +1,43 @@
+<header>
+    <div class='wrapper'>
+        <div class='title'>
+            DARTS
+        </div>
+        <ul>
+            <li>
+                <a routerLink="">Main Page</a>
+            </li>
+
+            <li *ngIf="didAdminLogin">
+                <a routerLink="admin/home">Admin Dashboard</a>
+            </li>
+
+            <li *ngIf="!didAdminLogin && !didAuthoritativeLogin">
+                <a routerLink="admin/login">Login as Admin</a>
+            </li>
+            <li *ngIf="didAdminLogin">
+                <a (click)="adminLogout()">
+                    Logout
+                </a>
+            </li>
+
+
+            <li *ngIf="!didAdminLogin && !didAuthoritativeLogin">
+                <a routerLink="authoritative/login">Login as Authoritative Person</a>
+            </li>
+
+            <li *ngIf="didAuthoritativeLogin">
+                <a routerLink="authoritative/home">Authoritative Dashboard</a>
+            </li>
+            <li *ngIf="didAuthoritativeLogin">
+                <a (click)="authoritativeLogout()">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</header>
+
+<router-outlet (activate)='ngOnInit()'>
+</router-outlet>

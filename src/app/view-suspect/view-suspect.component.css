@@ -1,0 +1,13 @@
+.frame {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.frame .suspect-details {}
+
+.suspect-details>div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 10px;
+}

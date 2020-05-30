@@ -1,0 +1,27 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Add a new Suspect </h1>
+        <form>
+            <label>Full Name: </label>
+            <input type='text' [(ngModel)]="suspect.fullName" name='fullName' />
+
+
+            <label>Gender: </label>
+            <select [(ngModel)]="suspect.gender" name="gender">
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label>Tags (separated by commas): </label>
+            <textarea [(ngModel)]="suspect.tags" name='tags'></textarea>
+
+
+
+            <!-- filler -->
+            <label></label>
+
+            <button (click)="addSuspect()">Add Suspect</button>
+        </form>
+    </div>
+
+</div>
