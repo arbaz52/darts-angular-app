@@ -1,0 +1,51 @@
+<div id='container'>
+    <div class='wrapper'>
+        <!-- <p>add-qrunit works!</p> -->
+        <h1>Add a new QR Unit </h1>
+        <form>
+            <label>QRUnit Name</label>
+            <input type='text' [(ngModel)]="qrunit.name" name="name" placeholder="QRUnit Name" style="font-size:30px;" />
+            <h2>Members ({{members.length}})</h2>
+            <div class='member-holder'>
+                <table border="1" width="100%">
+                    <tr>
+                        <th style='text-align: center' *ngFor="let c of col">
+                            {{c}}
+                        </th>
+                    </tr>
+                    <tr class='member' *ngFor="let m of members">
+                        <td style='padding: 5px 10px;'>{{m._id}}</td>
+                        <td style='padding: 5px 10px;'>{{m.fullName}}</td>
+                        <td style='padding: 5px 10px;'>{{m.gender}}</td>
+                        <td style='padding: 5px 10px;'> <img src="{{m.picture_url}}" /></td>
+                        <td style='padding: 5px 10px;'><button class='button red'>Remove</button></td>
+                    </tr>
+                </table>
+            </div>
+            <h2>Available People</h2>
+            <p>Click to select them as members</p>
+            <div class='person-holder'>
+                <!-- available people -->
+                <div class='person' *ngFor="let p of people; let i = index" (click)="addAsMember(p, i)" title="p.fullName">
+                    <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}}
+                </div>
+            </div>
+
+            <h2>Add A New Person</h2>
+            <label>Picture</label>
+            <input type='file' ng2FileSelect [uploader]="uploader" name="picture" (onFileSelected)="personPictureSelected($event)">
+            <label>Full Name</label>
+            <input type='text' [(ngModel)]="person.fullName" name="fullName">
+            <label>Gender</label>
+            <select name="gender" [(ngModel)]="person.gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="undisclosed">Undisclosed</option>
+            </select>
+            <button (click)="addPerson()">Add a new Person</button>
+
+            <h1>All Done</h1>
+            <button class='button green' (click)="addQRUnit()">Add this QRUnit</button>
+        </form>
+    </div>
+</div>

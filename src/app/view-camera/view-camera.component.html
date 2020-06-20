@@ -12,7 +12,7 @@
                     </select>
                 </div>
                 <img src="{{camera.url}}" *ngIf="videoOrigin == 'camera'" />
-                <img src="{{server.url + '/' + camera._id}}" *ngIf="videoOrigin == 'server' " />
+                <img src="{{server.url + '/camera/' + camera._id}}" *ngIf="videoOrigin == 'server' " />
 
             </div>
             <agm-map (mapClick)="choseThisLocation($event)" class='location-on-map' [latitude]="camera.latitude" [longitude]="camera.longitude" [zoom]="16">

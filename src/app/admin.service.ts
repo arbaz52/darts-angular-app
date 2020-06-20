@@ -7,12 +7,13 @@ const httpOptions = {
   }), withCredentials: true,
 };
 
+const url: string = "http://localhost:3000/"
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-
+  
   constructor(private http: HttpClient) { }
 
   login(email, password) {
@@ -56,6 +57,12 @@ export class AdminService {
     return this.http.delete("http://localhost:3000/admin/cameras/"+cameraId, httpOptions)
   }
 
+  autoAssign(){
+    return this.http.post(url+"admin/cameras/autoassign/", {}, httpOptions)
+  }
+
+
+
 
 
 
@@ -84,4 +91,15 @@ export class AdminService {
   }
                    
 
+
+
+  getAvailablePeople(){
+    return this.http.get(url+"admin/qrunit/person", httpOptions)
+  }
+
+  addQRUnit(qrunit){
+    return this.http.post(url+"admin/qrunit/", {
+      qrunit
+    }, httpOptions)
+  }
 }

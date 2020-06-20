@@ -7,6 +7,8 @@ const httpOptions = {
   }), withCredentials: true,
 };
 
+const url: string = "http://localhost:3000/"
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +50,26 @@ export class AuthoritativeService {
   }
   getSuspects() {
     return this.http.get("http://localhost:3000/authoritative/suspects/" , httpOptions)
+  }
+
+
+
+  getAvailablePeopleAdmin(){
+    return this.http.get(url+"authoritative/admin/person", httpOptions)
+  }
+  
+  addAdmin(admin){
+    return this.http.post(url+"authoritative/admin/", {
+      admin
+    }, httpOptions)
+  }
+
+  getAvailablePeopleAuthoritative(){
+    return this.http.get(url+"authoritative/authoritative/person", httpOptions)
+  }
+  addAp(ap){
+    return this.http.post(url+"authoritative/authoritative/", {
+      ap
+    }, httpOptions)
   }
 }

@@ -1,0 +1,57 @@
+<div id='container'>
+    <div class='wrapper'>
+        <!-- <p>add-ap works!</p> -->
+        <h1>Add an Authoritative Person</h1>
+        <h2>Select Person</h2>
+        <div>
+            <div id='available-aps'>
+                <h3 [class.done]="ap.personId != ''" [class.ion-checkmark-circled]="ap.personId != ''">Available People</h3>
+                <div *ngIf="ap.personId == ''">
+                    <p>Click to select the person</p>
+
+                    <div class='person-holder'>
+                        <!-- available people -->
+                        <div class='person' *ngFor="let p of people; let i = index" (click)="selectPerson(p, i)" title="p.fullName">
+                            <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 [class.done]="ap.personId != ''" [class.ion-checkmark-circled]="ap.personId != ''">Add a person</h3>
+                <div *ngIf="ap.personId == ''">
+                    <p>Person information does not exist in the database?</p>
+                    <label for="">*Provide a display picture</label>
+                    <input type='file' ng2FileSelect [uploader]="uploader" name="picture" (onFileSelected)="personPictureSelected($event)">
+                    <label>Full Name</label>
+                    <input type='text' [(ngModel)]="person.fullName" name="fullName">
+                    <label>Gender</label>
+                    <select name="gender" [(ngModel)]="person.gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="undisclosed">Undisclosed</option>
+                    </select>
+                    <button (click)="addPerson()">Add a new Person</button>
+                </div>
+            </div>
+        </div>
+        <h2>Privileges</h2>
+        <div>
+            <div *ngFor="let p of priv; let i = index">
+                <input type='checkbox' name="pri" value="{{p.name}}" (change)="priv[i].checked = $event.target.checked;" /> - {{p.name}}
+            </div>
+        </div>
+
+        <h2>Login Credentials</h2>
+        <p>Password will be emailed to the owner of this account!</p>
+        <div>
+            <h4>Person Selected: {{personSelected.fullName}} <button class='button' (click)="resetSelection()">Reset
+                    Selection</button></h4>
+        </div>
+        <div>
+            <label for="">*Email Address</label>
+            <input type='email' placeholder="Email Address" [(ngModel)]="ap.email" />
+            <button class=" button " (click)="addAp() ">Add this Authoritative Person</button>
+        </div>
+    </div>
+</div>

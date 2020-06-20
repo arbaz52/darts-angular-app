@@ -11,6 +11,11 @@ import { AuthoritativeLoginComponent } from './authoritative-login/authoritative
 import { AuthoritativeHomeComponent } from './authoritative-home/authoritative-home.component';
 import { AddSuspectComponent } from './add-suspect/add-suspect.component';
 import { ViewSuspectComponent } from './view-suspect/view-suspect.component';
+import { AutoAssignCameraComponent } from './auto-assign-camera/auto-assign-camera.component';
+import { AddQrunitComponent } from './add-qrunit/add-qrunit.component';
+import { QrunitLoginWithQrcodeComponent } from './qrunit-login-with-qrcode/qrunit-login-with-qrcode.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
+import { AddAuthoritativeComponent } from './add-authoritative/add-authoritative.component';
 
 
 const routes: Routes = [
@@ -31,6 +36,10 @@ const routes: Routes = [
     component: AddCameraComponent
   },
   {
+    path: "admin/cameras/autoassign",
+    component: AutoAssignCameraComponent
+  },
+  {
     path: "admin/cameras/:cameraId",
     component: ViewCameraComponent
   },
@@ -41,6 +50,16 @@ const routes: Routes = [
   {
     path: "admin/servers/:serverId",
     component: ViewServerComponent
+  },
+  {
+    path: "admin/qrunit/authenticate/:authId",
+    component: QrunitLoginWithQrcodeComponent
+  },
+
+  //qrunits
+  {
+    path: "admin/qrunits/add",
+    component: AddQrunitComponent
   },
 
   {
@@ -56,9 +75,24 @@ const routes: Routes = [
     component: AddSuspectComponent
   },
   {
-    path: "authoritative/suspects/:suspectId", 
+    path: "authoritative/suspects/:suspectId",
     component: ViewSuspectComponent
-  }
+  },
+
+
+
+  {
+    path: "authoritative/admins/add",
+    component: AddAdminComponent
+  }, 
+  {
+    path: "authoritative/authoritative/add",
+    component: AddAuthoritativeComponent
+  },
+
+
+
+
 ];
 
 @NgModule({

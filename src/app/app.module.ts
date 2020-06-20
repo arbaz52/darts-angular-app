@@ -27,6 +27,11 @@ import { ViewSuspectComponent } from './view-suspect/view-suspect.component';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { AngularFileUploaderModule } from "angular-file-uploader";
+import { AutoAssignCameraComponent } from './auto-assign-camera/auto-assign-camera.component';
+import { AddQrunitComponent } from './add-qrunit/add-qrunit.component';
+import { QrunitLoginWithQrcodeComponent } from './qrunit-login-with-qrcode/qrunit-login-with-qrcode.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
+import { AddAuthoritativeComponent } from './add-authoritative/add-authoritative.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
@@ -44,6 +49,11 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     AuthoritativeHomeComponent,
     AddSuspectComponent,
     ViewSuspectComponent,
+    AutoAssignCameraComponent,
+    AddQrunitComponent,
+    QrunitLoginWithQrcodeComponent,
+    AddAdminComponent,
+    AddAuthoritativeComponent,
   ],
   imports: [
     BrowserModule,

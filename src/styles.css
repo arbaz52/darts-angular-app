@@ -90,3 +90,59 @@ button {
     border-radius: 10px;
     ;
 }
+
+p.warning {
+    color: white;
+    background: red;
+    padding: 5px 10px;
+}
+
+h1.warning,
+h2.warning {
+    color: red;
+}
+
+button.green {
+    background: #27ae60;
+    color: white;
+}
+
+button.red {
+    background: #c0392b;
+    color: white;
+}
+
+button.red,
+button.green {
+    border-radius: 5px;
+    margin: 5px 10px;
+}
+
+.person-holder {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.person-holder .person {
+    width: 100px;
+    margin: 10px 15px;
+    padding: 5px;
+}
+
+.person-holder .person img {
+    width: 100%;
+}
+
+.member-holder .member img {
+    width: 100px;
+}
+
+.done {
+    background: #27ae60;
+    color: white;
+    padding: 5px 10px;
+}
+
+.done:before {
+    margin-right: 20px;
+}

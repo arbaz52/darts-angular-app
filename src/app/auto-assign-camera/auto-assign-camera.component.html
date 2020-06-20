@@ -1,0 +1,13 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Automatically Assign Cameras to nearest Servers</h1>
+        <h2 class='warning'>Warning</h2>
+        <p class='warning'>This will reset all the connections (cameras to servers) and will make new connections based on the location and to evenly distribute cameras to server in order to avoid bottleneck.</p>
+        <p class='warning'>Are you sure you want to continue?</p>
+        <div style='text-align: center;'>
+            <button class='green' (click)="autoAssign()">Yes, I'm sure.</button>
+            <button class='red' routerLink="../../home/">No, I'll reconsider.</button>
+        </div>
+        <p>{{result}}</p>
+    </div>
+</div>
