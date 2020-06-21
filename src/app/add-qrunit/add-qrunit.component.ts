@@ -111,9 +111,10 @@ export class AddQrunitComponent implements OnInit {
   addQRUnit = () => {
     this.qrunit.members = []
     for(var i = 0; i < this.members.length; i++){
-      this.qrunit.members.push({
-        personId: this.members[i]._id
-      })
+      // this.qrunit.members.push({
+      //   personId: this.members[i]._id
+      // })
+      this.qrunit.members.push(this.members[i]._id)
     }
     this.adminService.addQRUnit(this.qrunit).subscribe(
       (data: any) => {
