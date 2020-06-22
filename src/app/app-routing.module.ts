@@ -16,6 +16,7 @@ import { AddQrunitComponent } from './add-qrunit/add-qrunit.component';
 import { QrunitLoginWithQrcodeComponent } from './qrunit-login-with-qrcode/qrunit-login-with-qrcode.component';
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { AddAuthoritativeComponent } from './add-authoritative/add-authoritative.component';
+import { TestComponent } from './test/test.component';
 
 
 const routes: Routes = [
@@ -84,13 +85,16 @@ const routes: Routes = [
   {
     path: "authoritative/admins/add",
     component: AddAdminComponent
-  }, 
+  },
   {
     path: "authoritative/authoritative/add",
     component: AddAuthoritativeComponent
   },
 
-
+  {
+    path: "test",
+    component: TestComponent
+  }
 
 
 ];

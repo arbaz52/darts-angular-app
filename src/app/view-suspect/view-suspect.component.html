@@ -42,6 +42,30 @@
 
                 </div>
             </form>
+            <div class='map'>
+                <h1>Track history</h1>
+                <p>Alerts reported ({{alerts.length}})</p>
+                <p *ngIf="alerts.length == 0">Map will only be shown if there are alerts for this suspect.</p>
+                <div *ngIf="alerts.length > 0">
+                    <h3>Navigation</h3>
+                    <p>Navigate to this alert on the map: </p>
+                    <select (change)="showUnitOnMap($event.target.value, alerts)">
+                        <option value=""></option>
+                        <option *ngFor="let item of alerts" value="{{item._id}}">{{item.suspectId.fullName}} -
+                            {{item.time}}
+                        </option>
+                    </select>
+                    <br>
+                    <agm-map [latitude]="comsats.latitude" [longitude]="comsats.longitude" [zoom]="16" [zoom]="16">
+
+                        <agm-marker class='alert-marker' *ngFor="let item of alerts" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName"></agm-marker>
+                        <agm-polyline *ngFor="let path of tpl" [editable]="false">
+                            <agm-polyline-point *ngFor="let p of path" [latitude]="p[1]" [longitude]="p[0]">
+                            </agm-polyline-point>
+                        </agm-polyline>
+                    </agm-map>
+                </div>
+            </div>
         </div>
     </div>
 </div>

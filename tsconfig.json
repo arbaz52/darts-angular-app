@@ -17,7 +17,8 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "skipLibCheck": true //to remove angular library error
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

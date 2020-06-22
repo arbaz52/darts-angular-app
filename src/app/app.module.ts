@@ -22,7 +22,7 @@ import { AuthoritativeLoginComponent } from './authoritative-login/authoritative
 import { AuthoritativeHomeComponent } from './authoritative-home/authoritative-home.component';
 import { AddSuspectComponent } from './add-suspect/add-suspect.component';
 import { ViewSuspectComponent } from './view-suspect/view-suspect.component';
-
+import { AgmDirectionModule } from 'agm-direction';
 
 import { FileUploadModule } from 'ng2-file-upload';
 
@@ -32,6 +32,13 @@ import { AddQrunitComponent } from './add-qrunit/add-qrunit.component';
 import { QrunitLoginWithQrcodeComponent } from './qrunit-login-with-qrcode/qrunit-login-with-qrcode.component';
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { AddAuthoritativeComponent } from './add-authoritative/add-authoritative.component';
+
+//firebase
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database'
+import { environment } from 'src/environments/environment';
+import { TestComponent } from './test/test.component';
+
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
@@ -54,6 +61,7 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     QrunitLoginWithQrcodeComponent,
     AddAdminComponent,
     AddAuthoritativeComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,8 +77,11 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBtc_hk_Aamj-hBDpD2s0OyrzEBgbp4KeI'
     }),
+    AgmDirectionModule,
 
-    IonicModule.forRoot()
+    IonicModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebaseConfig, "fypqrf-b3259"),
+    AngularFireDatabaseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
