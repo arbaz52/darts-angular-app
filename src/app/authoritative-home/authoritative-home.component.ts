@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoritativeService } from '../authoritative.service';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-authoritative-home',
@@ -9,21 +10,21 @@ import { AuthoritativeService } from '../authoritative.service';
 export class AuthoritativeHomeComponent implements OnInit {
   suspects = []
 
-  constructor(private authoritativeService: AuthoritativeService) { }
+  constructor(private authoritativeService: AuthoritativeService, private toaster: ToasterService) { }
 
   ngOnInit() {
     
     this.authoritativeService.getSuspects().subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.suspects = data.suspects
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

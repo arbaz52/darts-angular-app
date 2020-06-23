@@ -13,12 +13,12 @@
                             {{c}}
                         </th>
                     </tr>
-                    <tr class='member' *ngFor="let m of members">
+                    <tr class='member' *ngFor="let m of members; let i = index">
                         <td style='padding: 5px 10px;'>{{m._id}}</td>
                         <td style='padding: 5px 10px;'>{{m.fullName}}</td>
                         <td style='padding: 5px 10px;'>{{m.gender}}</td>
                         <td style='padding: 5px 10px;'> <img src="{{m.picture_url}}" /></td>
-                        <td style='padding: 5px 10px;'><button class='button red'>Remove</button></td>
+                        <td style='padding: 5px 10px;'><button class='button red' (click)="removeMember(i, member)">Remove</button></td>
                     </tr>
                 </table>
             </div>
@@ -26,8 +26,9 @@
             <p>Click to select them as members</p>
             <div class='person-holder'>
                 <!-- available people -->
-                <div class='person' *ngFor="let p of people; let i = index" (click)="addAsMember(p, i)" title="p.fullName">
-                    <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}}
+                <div *ngFor="let p of people; let i = index" (click)="addAsMember(p, i)" title="p.fullName">
+                    <!-- <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}} -->
+                    <app-person-details [person]="p"></app-person-details>
                 </div>
             </div>
 

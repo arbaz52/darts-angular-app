@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -11,21 +12,21 @@ export class AdminHomeComponent implements OnInit {
   servers: any = []
   cameras: any = []
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private toaster: ToasterService) { }
 
   ngOnInit() {
 
     this.adminService.getCameras().subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.cameras = data.cameras
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -37,14 +38,14 @@ export class AdminHomeComponent implements OnInit {
     this.adminService.getServers().subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.servers = data.servers
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoritativeService } from '../authoritative.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-add-suspect',
@@ -17,7 +18,7 @@ export class AddSuspectComponent implements OnInit {
       gender: "",
       tags: ""
     }
-  constructor(private authoritativeService: AuthoritativeService, private router: Router) { }
+  constructor(private authoritativeService: AuthoritativeService, private router: Router, private toaster: ToasterService) { }
 
   ngOnInit() {
   }
@@ -27,14 +28,14 @@ export class AddSuspectComponent implements OnInit {
     this.authoritativeService.addSuspect(this.suspect).subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ) {
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["authoritative/suspects/" + data.suspect._id])
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

@@ -7,14 +7,14 @@
                 </agm-marker>
             </div>
             <div *ngIf="filter.cameras">
-                <agm-marker class='camera-marker' *ngFor="let item of cameras" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="camera_icon" [title]="'camera: ' + item._id"></agm-marker>
+                <agm-marker class='camera-marker' *ngFor="let item of cameras" (markerClick)="viewLiveFeed(item)" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="camera_icon" [title]="'camera: ' + item._id"></agm-marker>
             </div>
             <div *ngIf="filter.servers">
                 <agm-marker class='server-marker' *ngFor="let item of servers" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="server_icon" [title]="'server: ' + item._id" [label]="item.name">
                 </agm-marker>
             </div>
             <div *ngIf="filter.alerts">
-                <agm-marker class='alert-marker' *ngFor="let item of alerts" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName"></agm-marker>
+                <agm-marker class='alert-marker' *ngFor="let item of alerts" (markerClick)="viewAlert(item)" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName"></agm-marker>
             </div>
             <!-- 
             <div *ngIf="filter.paths">
@@ -33,49 +33,54 @@
                 </agm-polyline>
             </div>
         </agm-map>
-        <h2>Filter</h2>
-        <div *ngFor="let item of filter_keys">
-            <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item}}
-        </div>
-        <h2>Navigation</h2>
         <div>
-            <p>Search for places</p>
-            <input type='search' [(ngModel)]="search.query" />
-            <button (click)="searchLocation(search.query)">Search</button>
-            <ul>
-                <li *ngFor="let item of search.results" (click)="moveMapOver(item.geometry)">
-                    <div>{{item.formatted}}</div>
-                    <div>{{item.geometry | json}}</div>
-                </li>
-            </ul>
+            <h2>Filter</h2>
+            <div class='filters-holder'>
+                <div *ngFor="let item of filter_keys">
+                    <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item}}
+                </div>
+            </div>
+            <h2>Navigation</h2>
+            <div>
+                <p>Search for places</p>
+                <input type='search' [(ngModel)]="search.query" (keyup.enter)="searchLocation(search.query)" />
+                <button (click)="searchLocation(search.query)">Search</button>
+                <ul class='search-suggestions-holder'>
+                    <li class='search-suggestion' *ngFor="let item of search.results" (click)="moveMapOver(item.geometry)">
+                        <div><b>{{item.formatted}}</b></div>
+                        <div>lat: {{item.geometry.lat}}, lng: {{item.geometry.lng}}</div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <p>Move map over:</p>
+                <p>QRUnits: </p>
+                <select (change)="showQRUnit($event.target.value)">
+                    <option value=""></option>
+                    <option *ngFor="let item of qrunits" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
+                </select>
+
+                <p>Cameras: </p>
+                <select (change)="showUnitOnMap($event.target.value, cameras)">
+                    <option value=""></option>
+                    <option *ngFor="let item of cameras" value="{{item._id}}">{{item._id}}</option>
+                </select>
+
+                <p>Servers: </p>
+                <select (change)="showUnitOnMap($event.target.value, servers)">
+                    <option value=""></option>
+                    <option *ngFor="let item of servers" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
+                </select>
+
+                <p>Alerts: </p>
+                <select (change)="showUnitOnMap($event.target.value, alerts)">
+                    <option value=""></option>
+                    <option *ngFor="let item of alerts" value="{{item._id}}">{{item.suspectId.fullName}} - {{item.time}}
+                    </option>
+                </select>
+            </div>
         </div>
-        <div>
-            <p>Move map over:</p>
-            <p>QRUnits: </p>
-            <select (change)="showQRUnit($event.target.value)">
-                <option value=""></option>
-                <option *ngFor="let item of qrunits" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
-            </select>
-
-            <p>Cameras: </p>
-            <select (change)="showUnitOnMap($event.target.value, cameras)">
-                <option value=""></option>
-                <option *ngFor="let item of cameras" value="{{item._id}}">{{item._id}}</option>
-            </select>
-
-            <p>Servers: </p>
-            <select (change)="showUnitOnMap($event.target.value, servers)">
-                <option value=""></option>
-                <option *ngFor="let item of servers" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
-            </select>
-
-            <p>Alerts: </p>
-            <select (change)="showUnitOnMap($event.target.value, alerts)">
-                <option value=""></option>
-                <option *ngFor="let item of alerts" value="{{item._id}}">{{item.suspectId.fullName}} - {{item.time}}
-                </option>
-            </select>
-        </div>
+        <!-- 
         <h2>Firebase Items</h2>
         <ul>
             <li *ngFor="let item of items">
@@ -106,5 +111,6 @@
                 {{ item | json }}
             </li>
         </ul>
+         -->
     </div>
 </div>

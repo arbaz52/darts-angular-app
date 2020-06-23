@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { AdminService } from '../admin.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-add-qrunit',
@@ -30,9 +31,14 @@ export class AddQrunitComponent implements OnInit {
     members: []
   }
 
-  uploader: FileUploader;
-  constructor(private adminService: AdminService,private router: Router) { }
+  removeMember = (i, member) => {
+    var m = this.members.splice(i, 1)
+    this.people.push(m[0])
+  }
 
+
+  uploader: FileUploader;
+  constructor(private adminService: AdminService,private router: Router, private toaster:ToasterService) { }
   ngOnInit() {
 
     this.uploader = new FileUploader({
@@ -44,17 +50,17 @@ export class AddQrunitComponent implements OnInit {
       (data) => {
         data = JSON.parse(data)
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.people.push(data.person)
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.person.fullName = ""
           this.person.gender = ""
         }
       },
       (err) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -71,13 +77,13 @@ export class AddQrunitComponent implements OnInit {
     //get all available people
     this.adminService.getAvailablePeople().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err.message)
+        this.toaster.err(data.err.message)
       } else if (data.succ) {
         this.people = data.people
       }
     },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -92,11 +98,11 @@ export class AddQrunitComponent implements OnInit {
   addPerson = () => {
     console.log("works")
     if (this.uploader.queue.length <= 0) {
-      alert("Please provide a picture!")
+      this.toaster.err("Please provide a picture!")
       return
     }
     this.uploader.uploadAll()
-    alert("Please wait!")
+    this.toaster.info("Please wait!")
   }
 
 
@@ -119,14 +125,14 @@ export class AddQrunitComponent implements OnInit {
     this.adminService.addQRUnit(this.qrunit).subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ) {
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["admin/qrunit/authenticate/" + data.auth_id])
         }
       },
         (err: any) => {
-          alert(err)
+          this.toaster.err(err)
         },
         () => {
   

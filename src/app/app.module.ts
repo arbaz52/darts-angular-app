@@ -38,9 +38,24 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { environment } from 'src/environments/environment';
 import { TestComponent } from './test/test.component';
+import { ViewLiveFeedComponent } from './view-live-feed/view-live-feed.component';
+import { ViewAlertComponent } from './view-alert/view-alert.component';
+import { SuspectDetailsComponent } from './suspect-details/suspect-details.component';
+import { PersonDetailsComponent } from './person-details/person-details.component';
+import { TestsOnlyComponent } from './tests-only/tests-only.component';
+import { ToastrModule, GlobalConfig } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
+
+const toastOptions:Partial<GlobalConfig>  = {
+  timeOut: 1000,
+  progressBar: true,
+  progressAnimation: 'decreasing',
+  positionClass: 'toast-bottom-right'
+}
 
 @NgModule({
   declarations: [
@@ -62,6 +77,11 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
     AddAdminComponent,
     AddAuthoritativeComponent,
     TestComponent,
+    ViewLiveFeedComponent,
+    ViewAlertComponent,
+    SuspectDetailsComponent,
+    PersonDetailsComponent,
+    TestsOnlyComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,7 +101,12 @@ const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig, "fypqrf-b3259"),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+
+
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(toastOptions) // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent]

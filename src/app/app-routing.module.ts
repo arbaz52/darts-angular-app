@@ -17,6 +17,9 @@ import { QrunitLoginWithQrcodeComponent } from './qrunit-login-with-qrcode/qruni
 import { AddAdminComponent } from './add-admin/add-admin.component';
 import { AddAuthoritativeComponent } from './add-authoritative/add-authoritative.component';
 import { TestComponent } from './test/test.component';
+import { ViewLiveFeedComponent } from './view-live-feed/view-live-feed.component';
+import { ViewAlertComponent } from './view-alert/view-alert.component';
+import { TestsOnlyComponent } from './tests-only/tests-only.component';
 
 
 const routes: Routes = [
@@ -90,10 +93,22 @@ const routes: Routes = [
     path: "authoritative/authoritative/add",
     component: AddAuthoritativeComponent
   },
+  {
+    path: "authoritative/map",
+    component: TestComponent
+  },
+  {
+    path: "authoritative/live/:cameraId",
+    component: ViewLiveFeedComponent
+  },
+  {
+    path: "authoritative/alert/:alertId",
+    component: ViewAlertComponent
+  },
 
   {
     path: "test",
-    component: TestComponent
+    component: TestsOnlyComponent
   }
 
 

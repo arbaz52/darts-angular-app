@@ -1,19 +1,24 @@
 <div id='container'>
     <div class='wrapper'>
         <h1>Welcome to Authoritative Dashboard</h1>
-
+        <div class='big-banner'>
+            <button class='button green' routerLink="./../map">Open Map</button>
+            <button class='button green' routerLink="./../admins/add">Add Admin</button>
+            <button class='button green' routerLink="./../authoritative/add">Add Authoritative Person</button>
+        </div>
+        <!-- 
         <div class='bar'>
             <h1>Manage Admins</h1>
             <div class='buttons'>
-                <button class='button' routerLink="./../admins/add">Add Admin</button>
+                
             </div>
         </div>
         <div class='bar'>
             <h1>Manage Authoritative Personnel</h1>
             <div class='buttons'>
-                <button class='button' routerLink="./../authoritative/add">Add Authoritative Person</button>
+                
             </div>
-        </div>
+        </div> -->
 
 
         <!-- 
@@ -35,10 +40,11 @@
             </div>
         </div>
         <div class='suspects'>
-            <div *ngFor="let suspect of suspects" class='suspect' routerLink="../suspects/{{suspect._id}}">
-                <h3>{{suspect.fullName}}</h3>
+            <div *ngFor="let suspect of suspects" routerLink="../suspects/{{suspect._id}}">
+                <!-- <h3>{{suspect.fullName}}</h3>
                 <p class='id' style='font-size:10px'>ID: {{suspect._id}}</p>
-                <img src="{{suspect.pictures[0]}}" *ngIf="suspect.pictures.length > 0" />
+                <img src="{{suspect.pictures[0]}}" *ngIf="suspect.pictures.length > 0" /> -->
+                <app-suspect-details [suspect]="suspect"></app-suspect-details>
             </div>
         </div>
     </div>

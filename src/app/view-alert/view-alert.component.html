@@ -1,0 +1,23 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Viewing Alert</h1>
+        <p>When was this alert generated: {{alert.time}}</p>
+        <p>ID: {{alert._id}}</p>
+        <div *ngIf="alert" class='alert-holder'>
+            <div class='frame-holder'>
+                <h2>Captured Frame: </h2>
+                <img src="{{alert.frame_url}}" alt="">
+            </div>
+            <div class='suspect-holder'>
+                <h2>Suspect Information</h2>
+                <p>Click on suspect to view additional information</p>
+                <app-suspect-details [suspect]="alert.suspectId"></app-suspect-details>
+
+
+            </div>
+        </div>
+        <div *ngIf="!alert">
+            Loading alert
+        </div>
+    </div>
+</div>

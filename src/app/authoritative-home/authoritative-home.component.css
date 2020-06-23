@@ -36,3 +36,17 @@
     ;
     border-radius: 10px;
 }
+
+.big-banner {
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+    margin: 10px 0;
+    background: #3498db;
+}
+
+.big-banner button {
+    background: white !important;
+    color: black !important;
+    margin: 0 10px;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AdminService } from '../admin.service';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-add-server',
@@ -48,28 +49,28 @@ export class AddServerComponent implements OnInit {
       this.adminService.addServer(server).subscribe(
         (data: any) => {
           if(data.err){
-            alert(data.err.message)
+            this.toaster.err(data.err.message)
           }else if(data.succ){
-            alert(data.succ.message)
+            this.toaster.succ(data.succ.message)
             this.router.navigate(["admin/servers/"+data.server._id])
           }
         },
         (err: any) => {
-          alert(err)
+          this.toaster.err(err)
         },
         () => {
 
         }
       )
     }else{
-      alert("Please fill in all the details")
+      this.toaster.err("Please fill in all the details")
     }
   }
 
 
 
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private adminService: AdminService, private router: Router, private toaster: ToasterService) { }
 
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthoritativeService } from '../authoritative.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-authoritative-login',
@@ -12,7 +13,7 @@ export class AuthoritativeLoginComponent implements OnInit {
   email: string
   password: string
 
-  constructor(private authoritativeService: AuthoritativeService, private router: Router) { }
+  constructor(private authoritativeService: AuthoritativeService, private router: Router, private toaster: ToasterService) { }
 
   ngOnInit() {
   }
@@ -22,14 +23,14 @@ export class AuthoritativeLoginComponent implements OnInit {
     this.authoritativeService.login(this.email, this.password).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["authoritative/home"])
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

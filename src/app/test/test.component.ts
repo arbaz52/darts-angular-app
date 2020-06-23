@@ -4,12 +4,25 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthoritativeService } from '../authoritative.service';
 import { TplapiService } from '../tplapi.service';
+import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
+
+  viewLiveFeed = (camera) => {
+    console.log('working')
+    this.router.navigate(["authoritative/live/"+camera._id])
+  }
+
+  viewAlert = (alert) => {
+    console.log('working')
+    this.router.navigate(["authoritative/alert/"+alert._id])
+  }
+
   //searching
   search: { query: string, results: any[] } = {
     query: "",
@@ -24,7 +37,7 @@ export class TestComponent implements OnInit {
       this.apService.mSearchLocation(query).subscribe((data: any) => {
         console.log(data)
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else {
           this.search.results = data.locations.results
         }
@@ -139,7 +152,7 @@ export class TestComponent implements OnInit {
       var path = this.paths[k]
       this.tplapi.getRoute(path).subscribe((data: any) => {
         if (data.err || data.error) {
-          alert(data.err)
+          this.toaster.err(data.err)
         } else {
           this.tpl.push(data.p[0].p)
           // console.log(data.p[0].p)
@@ -153,7 +166,8 @@ export class TestComponent implements OnInit {
 
   }
 
-  constructor(private fbdbs: FirebasedatabaseService, private apService: AuthoritativeService, private tplapi: TplapiService) { }
+  constructor(private fbdbs: FirebasedatabaseService, private apService: AuthoritativeService, private tplapi: TplapiService, private router: Router, private toaster: ToasterService) { }
+
 
   ngOnInit() {
     this.filter_keys = Object.keys(this.filter)
@@ -166,7 +180,7 @@ export class TestComponent implements OnInit {
 
     this.apService.mGetCameras().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err)
+        this.toaster.err(data.err)
       } else {
         this.cameras = data.cameras
       }
@@ -176,7 +190,7 @@ export class TestComponent implements OnInit {
 
     this.apService.mGetServers().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err)
+        this.toaster.err(data.err)
       } else {
         this.servers = data.servers
       }
@@ -188,7 +202,7 @@ export class TestComponent implements OnInit {
 
     this.apService.mGetQRUnits().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err)
+        this.toaster.err(data.err)
       } else {
         this.qrunits = data.qrunits
 
@@ -203,7 +217,7 @@ export class TestComponent implements OnInit {
 
     this.apService.mGetAlerts().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err)
+        this.toaster.err(data.err)
       } else {
         this.alerts = data.alerts
         for (var i = 0; i < this.alerts.length; i++) {

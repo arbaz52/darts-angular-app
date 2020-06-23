@@ -100,4 +100,11 @@ export class AuthoritativeService {
   getSuspectAlerts = (suspectId) => {
     return this.http.get(url + "authoritative/map/alerts/"+suspectId, httpOptions)
   }
+  
+  getCamera(cameraId){
+    return this.http.get("http://localhost:3000/authoritative/map/camera/"+cameraId, httpOptions)
+  }
+  getAlert(alertId){
+    return this.http.get("http://localhost:3000/authoritative/map/alert/"+alertId, httpOptions)
+  }
 }

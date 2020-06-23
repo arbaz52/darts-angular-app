@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from './admin.service';
 import { Router } from '@angular/router';
 import { AuthoritativeService } from './authoritative.service';
+import { ToasterService } from './toaster.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { AuthoritativeService } from './authoritative.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private authoritativeService: AuthoritativeService, private router: Router) { }
+  constructor(private adminService: AdminService, private authoritativeService: AuthoritativeService, private router: Router, private toaster: ToasterService) { }
 
   title = 'client';
   didAdminLogin: boolean = false
@@ -20,9 +21,9 @@ export class AppComponent implements OnInit {
     this.adminService.logout().subscribe(
       (data: any) => {
         if (data.err)
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         else {
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["/"])
         }
       },
@@ -39,9 +40,9 @@ export class AppComponent implements OnInit {
     this.authoritativeService.logout().subscribe(
       (data: any) => {
         if (data.err)
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         else {
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["/"])
         }
       },
@@ -74,7 +75,7 @@ export class AppComponent implements OnInit {
 
 
 
-    
+
     this.authoritativeService.isLoggedIn().subscribe(
       (data: any) => {
         if (data.err)

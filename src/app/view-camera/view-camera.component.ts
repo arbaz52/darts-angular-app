@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-view-camera',
@@ -24,7 +25,7 @@ export class ViewCameraComponent implements OnInit {
     _id: "", longitude: 0, latitude: 0, url: "", serverId: ""
   }
   cameraId: string
-  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute) { }
+  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private toaster: ToasterService) { }
 
   ngOnInit() {
     this.cameraId = this.activatedRoute.snapshot.paramMap.get("cameraId")
@@ -34,14 +35,14 @@ export class ViewCameraComponent implements OnInit {
       
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.servers = data.servers
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -52,7 +53,7 @@ export class ViewCameraComponent implements OnInit {
       
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.camera = data.camera
@@ -61,7 +62,7 @@ export class ViewCameraComponent implements OnInit {
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -81,13 +82,13 @@ export class ViewCameraComponent implements OnInit {
     this.adminService.updateCamera(this.cameraId, this.camera).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

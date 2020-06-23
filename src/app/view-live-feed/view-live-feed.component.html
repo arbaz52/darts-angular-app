@@ -1,0 +1,47 @@
+<div id='container'>
+    <div class='wrapper'>
+        <h1>Viewing live footage of camera: {{camera._id}}</h1>
+        <div class='frame'>
+
+            <div class='live-footage'>
+                <div>
+                    Footage from:
+                    <select [(ngModel)]="videoOrigin">
+                        <option value='camera'>Camera</option>
+                        <option value='server' *ngIf="server != null">Server</option>
+                    </select>
+                </div>
+                <img src="{{camera.url}}" *ngIf="videoOrigin == 'camera'" />
+                <img src="{{server.url + '/camera/' + camera._id}}" *ngIf="videoOrigin == 'server' " />
+
+            </div>
+            <agm-map class='location-on-map' [latitude]="camera.latitude" [longitude]="camera.longitude" [zoom]="16">
+                <agm-marker [longitude]="camera.longitude" [latitude]="camera.latitude"></agm-marker>
+            </agm-map>
+            <div class='camera-details'>
+                <!-- can edit camera details here  -->
+                <h1>Camera Details</h1>
+                <div>
+                    <label>Url: </label>
+                    <label>{{camera.url}}</label>
+
+                    <label>Location </label>
+
+                    <!-- filler -->
+                    <label></label>
+
+                    <label>Longitude: </label>
+                    <label>{{camera.longitude}}</label>
+                    <label>Latitude: </label>
+                    <label>{{camera.latitude}}</label>
+
+
+                    <h3 *ngIf="server != null" style='grid-column: 1 / 3'>Assigned to Server: {{server._id }}</h3>
+                    <h3 *ngIf="server == null" style='grid-column: 1 / 3'>Not assigned to any server</h3>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

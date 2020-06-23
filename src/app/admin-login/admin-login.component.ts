@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -14,21 +15,21 @@ export class AdminLoginComponent {
   password: string
 
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  constructor(private adminService: AdminService, private router: Router, private toaster: ToasterService) { }
 
 
   login(){
     this.adminService.login(this.email, this.password).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["admin/home"])
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { AuthoritativeService } from '../authoritative.service';
 import { Router } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-add-admin',
@@ -45,7 +46,7 @@ export class AddAdminComponent implements OnInit {
 
 
   uploader: FileUploader;
-  constructor(private authoritativeService: AuthoritativeService, private router: Router) { }
+  constructor(private authoritativeService: AuthoritativeService, private router: Router, private toaster: ToasterService) { }
 
   ngOnInit() {
 
@@ -58,18 +59,18 @@ export class AddAdminComponent implements OnInit {
       (data) => {
         data = JSON.parse(data)
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.people.push(data.person)
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.person.fullName = ""
           this.person.gender = ""
           this.selectPerson(data.person, 0);
         }
       },
       (err) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -86,13 +87,13 @@ export class AddAdminComponent implements OnInit {
     //get all available people
     this.authoritativeService.getAvailablePeopleAdmin().subscribe((data: any) => {
       if (data.err) {
-        alert(data.err.message)
+        this.toaster.err(data.err.message)
       } else if (data.succ) {
         this.people = data.people
       }
     },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -107,11 +108,11 @@ export class AddAdminComponent implements OnInit {
   addPerson = () => {
     console.log("works")
     if (this.uploader.queue.length <= 0) {
-      alert("Please provide a picture!")
+      this.toaster.err("Please provide a picture!")
       return
     }
     this.uploader.uploadAll()
-    alert("Please wait!")
+    this.toaster.info("Please wait!")
   }
 
 
@@ -141,14 +142,14 @@ export class AddAdminComponent implements OnInit {
     this.authoritativeService.addAdmin(this.admin).subscribe(
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ) {
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
           this.router.navigate(["authoritative/home/"])
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

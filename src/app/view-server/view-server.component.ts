@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-view-server',
@@ -20,7 +21,7 @@ export class ViewServerComponent implements OnInit {
     }
 
   serverId: string
-  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute) { }
+  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private toaster: ToasterService) { }
 
   choseThisLocation = (event) => {
     this.server.latitude = event.coords.lat
@@ -32,14 +33,14 @@ export class ViewServerComponent implements OnInit {
 
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.server = data.server
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -51,13 +52,13 @@ export class ViewServerComponent implements OnInit {
     this.adminService.updateServer(this.serverId, this.server).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -68,13 +69,13 @@ export class ViewServerComponent implements OnInit {
     this.adminService.deleteServer(this.serverId).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

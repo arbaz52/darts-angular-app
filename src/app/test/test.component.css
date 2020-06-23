@@ -9,3 +9,27 @@
     color: red;
     ;
 }
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 10px;
+}
+
+.search-suggestions-holder {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #666;
+}
+
+.search-suggestion {
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #666;
+}
+
+.search-suggestion:hover {
+    background: #aaa;
+}

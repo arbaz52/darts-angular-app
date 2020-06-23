@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthoritativeService } from '../authoritative.service';
 import { FileUploader } from 'ng2-file-upload';
 import { TplapiService } from '../tplapi.service';
+import { ToasterService } from '../toaster.service';
 
 @Component({
   selector: 'app-view-suspect',
@@ -52,7 +53,7 @@ export class ViewSuspectComponent implements OnInit {
       var path = this.paths[k]
       this.tplapi.getRoute(path).subscribe((data: any) => {
         if (data.err || data.error) {
-          alert(data.err)
+          this.toaster.err(data.err || data.error)
         } else {
           this.tpl.push(data.p[0].p)
           // console.log(data.p[0].p)
@@ -87,14 +88,14 @@ export class ViewSuspectComponent implements OnInit {
   suspectId: string;
 
   uploader: FileUploader;
-  constructor(private authoritativeService: AuthoritativeService, private activatedRoute: ActivatedRoute, private tplapi: TplapiService) {
+  constructor(private authoritativeService: AuthoritativeService, private activatedRoute: ActivatedRoute, private tplapi: TplapiService, private toaster: ToasterService) {
 
 
   }
 
   uploadFiles = () => {
     this.uploader.uploadAll()
-    alert("pictures are being uploaded")
+    this.toaster.info("pictures are being uploaded")
   }
 
   ngOnInit() {
@@ -109,7 +110,7 @@ export class ViewSuspectComponent implements OnInit {
       (data) => {
         data = JSON.parse(data)
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.suspect = data.suspect
@@ -118,7 +119,7 @@ export class ViewSuspectComponent implements OnInit {
         }
       },
       (err) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -128,14 +129,14 @@ export class ViewSuspectComponent implements OnInit {
 
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
           this.suspect = data.suspect
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 
@@ -150,7 +151,7 @@ export class ViewSuspectComponent implements OnInit {
 
       (data: any) => {
         if (data.err) {
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           // console.log(data)
         this.alerts = data.alerts
@@ -171,7 +172,7 @@ export class ViewSuspectComponent implements OnInit {
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

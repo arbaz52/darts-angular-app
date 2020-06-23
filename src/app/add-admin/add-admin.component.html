@@ -11,8 +11,9 @@
 
                     <div class='person-holder'>
                         <!-- available people -->
-                        <div class='person' *ngFor="let p of people; let i = index" (click)="selectPerson(p, i)" title="p.fullName">
-                            <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}}
+                        <div *ngFor="let p of people; let i = index" (click)="selectPerson(p, i)" title="p.fullName">
+                            <!-- <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}} -->
+                            <app-person-details [person]="p"></app-person-details>
                         </div>
                     </div>
                 </div>
