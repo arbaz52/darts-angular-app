@@ -14,12 +14,27 @@
                 <button routerLink="../cameras/add">Add Camera</button>
             </div>
         </div>
+        <div class='search'>
+            <p>Search for cameras at location: </p>
+            <div class='search-bar'>
+                <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.cameras.query" (keyup.enter)="searchForCamerasAtLocation()" placeholder="Type location name" />
+                <button (click)="clearCamerasSearchQuery()">Clear</button>
+            </div>
+        </div>
         <div class='cameras'>
-            <div *ngFor="let camera of cameras" class='camera' routerLink="../cameras/{{camera._id}}">
-                <p class='id'>ID: {{camera._id}}</p>
-                <p class='location'>Location: {{camera.latitude | number : '.2' }},{{camera.longitude| number : '1.1' }}</p>
-                <img src="{{camera.url}}" />
-                <p>Assigned to server: {{camera.serverId || "No server"}}</p>
+            <div *ngIf="search.cameras.query != ''">
+                <div *ngIf="search.cameras.location != null">
+                    <h4>Cameras near location: </h4>
+                    <p>{{search.cameras.location.formatted}}</p>
+                    <div class='cameras-holder'>
+                        <app-camera-details *ngFor="let camera of search.cameras.cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="search.cameras.query == ''">
+                <div class='cameras-holder'>
+                    <app-camera-details *ngFor="let camera of cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
+                </div>
             </div>
         </div>
         <div class='bar'>
@@ -29,13 +44,8 @@
             </div>
         </div>
         <div class='servers'>
-            <div *ngFor="let server of servers" class='server' routerLink="../servers/{{server._id}}">
-                <h3>{{server.name}}</h3>
-
-                <p class='id'>ID: {{server._id}}</p>
-                <p class='location'>Location: {{server.latitude | number : '.2' }},{{server.longitude| number : '1.1' }}</p>
-                <p>Connected Cameras: {{ server.cameras.length }}</p>
-            </div>
+            <app-server-details *ngFor="let server of servers" [server]="server">
+            </app-server-details>
         </div>
     </div>
 </div>

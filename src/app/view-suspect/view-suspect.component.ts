@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthoritativeService } from '../authoritative.service';
 import { FileUploader } from 'ng2-file-upload';
 import { TplapiService } from '../tplapi.service';
 import { ToasterService } from '../toaster.service';
+import { DialogData, TempDialogComponent } from '../temp-dialog/temp-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-view-suspect',
@@ -11,7 +13,49 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./view-suspect.component.css']
 })
 export class ViewSuspectComponent implements OnInit {
+  //dialog
+  clickOnImage = (url) => {
+    
+    var d: DialogData = {
+      btnNo: "Delete",
+      btnYes: "View",
+      description: "You selected an image, what you do want to do with it?",
+      title: "Image selected!"
+    }
+    var dia = this.dialog.open(TempDialogComponent, {
+      data: d
+    })
+    dia.componentInstance.no.subscribe(x => {
+      this.toaster.info("Deleting image!")
+      var index = this.suspect.pictures.indexOf(url)
+      if(index > -1){
+        this.suspect.pictures.splice(index, 1)
+        this.updateSuspect()
+      }
+      dia.close()
+    })
+    dia.componentInstance.yes.subscribe(x => {
+      this.toaster.succ(x)
+      window.open(
+        url,
+        '_blank' // <- This is what makes it open in a new window.
+      );
+      dia.close()
+    })
+  }
 
+
+
+  //chipper
+  updateSuspectTags(tags) {
+    console.log(tags)
+    this.suspect.tags = tags;
+  }
+
+  viewAlert = (alert) => {
+    console.log('working')
+    this.router.navigate(["authoritative/alert/" + alert._id])
+  }
   //for map
   alerts: any[] = []
 
@@ -77,7 +121,7 @@ export class ViewSuspectComponent implements OnInit {
     fullName: string,
     gender: string,
     pictures: string[],
-    tags: []
+    tags: string[]
   } = {
       _id: "",
       fullName: "",
@@ -88,7 +132,7 @@ export class ViewSuspectComponent implements OnInit {
   suspectId: string;
 
   uploader: FileUploader;
-  constructor(private authoritativeService: AuthoritativeService, private activatedRoute: ActivatedRoute, private tplapi: TplapiService, private toaster: ToasterService) {
+  constructor(private authoritativeService: AuthoritativeService, private activatedRoute: ActivatedRoute, private tplapi: TplapiService, private toaster: ToasterService, private router: Router, public dialog: MatDialog) {
 
 
   }
@@ -113,6 +157,7 @@ export class ViewSuspectComponent implements OnInit {
           this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           console.log(data)
+          this.toaster.succ(data.succ)
           this.suspect = data.suspect
           this.suspect.pictures.push(data.frame_url)
           console.log(this.suspect)
@@ -154,21 +199,21 @@ export class ViewSuspectComponent implements OnInit {
           this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
           // console.log(data)
-        this.alerts = data.alerts
-        if(this.alerts.length > 0){
-          this.comsats.latitude = this.alerts[0].latitude
-          this.comsats.longitude = this.alerts[0].longitude
-        }
-        console.log(this.alerts[0].latitude, this.alerts[0].longitude)
-        for (var i = 0; i < this.alerts.length; i++) {
-          var alert = this.alerts[i]
-          alert.icon = {
-            url: alert.suspectId.pictures[0],
-            scaledSize: this.scaledSize
+          this.alerts = data.alerts
+          if (this.alerts.length > 0) {
+            this.comsats.latitude = this.alerts[0].latitude
+            this.comsats.longitude = this.alerts[0].longitude
           }
+          console.log(this.alerts[0].latitude, this.alerts[0].longitude)
+          for (var i = 0; i < this.alerts.length; i++) {
+            var alert = this.alerts[i]
+            alert.icon = {
+              url: alert.suspectId.pictures[0],
+              scaledSize: this.scaledSize
+            }
 
-        }
-        this.generatePaths();
+          }
+          this.generatePaths();
         }
       },
       (err: any) => {
@@ -183,7 +228,7 @@ export class ViewSuspectComponent implements OnInit {
 
   }
 
-  
+
   showUnitOnMap = (_id, _list) => {
     console.log(_id)
     for (var i = 0; i < _list.length; i++) {
@@ -196,5 +241,51 @@ export class ViewSuspectComponent implements OnInit {
         break
       }
     }
+  }
+
+
+
+  deleteSuspect = () => {
+
+    this.toaster.info("Deleting suspect! Please wait")
+    this.authoritativeService.deleteSuspect(this.suspectId).subscribe(
+
+      (data: any) => {
+        if (data.err) {
+          this.toaster.err(data.err.message)
+        } else if (data.succ || !(data.err)) {
+          this.toaster.succ(data.succ)
+          this.router.navigate(["/authoritative/home"])
+        }
+      },
+      (err: any) => {
+        this.toaster.err(err)
+      },
+      () => {
+
+      }
+    )
+  }
+
+  updateSuspect = () => {
+    this.toaster.info("Updating suspect! Please wait")
+    this.authoritativeService.updateSuspect(this.suspect).subscribe(
+
+      (data: any) => {
+        if (data.err) {
+          this.toaster.err(data.err.message)
+        } else if (data.succ || !(data.err)) {
+          console.log(data)
+          this.toaster.succ(data.succ)
+          this.suspect = data.suspect
+        }
+      },
+      (err: any) => {
+        this.toaster.err(err)
+      },
+      () => {
+
+      }
+    )
   }
 }

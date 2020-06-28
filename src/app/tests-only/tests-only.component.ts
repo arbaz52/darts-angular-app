@@ -1,5 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
+import { MatDialog } from '@angular/material';
+import { TempDialogComponent, DialogData } from '../temp-dialog/temp-dialog.component';
+import { ToasterService } from '../toaster.service';
+
 
 @Component({
   selector: 'app-tests-only',
@@ -7,21 +13,27 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./tests-only.component.css']
 })
 export class TestsOnlyComponent implements OnInit {
-
-  constructor(private toastr: ToastrService) { }
+  open(){
+    var d: DialogData = {
+      btnNo: "Delete",
+      btnYes: "View",
+      description: "You selected an image, what you do want to do with it?",
+      title: "Image selected!"
+    }
+    var dia = this.dialog.open(TempDialogComponent, {
+      data: d
+    })
+    dia.componentInstance.no.subscribe(x => {
+      this.toaster.err(x)
+      dia.close()
+    })
+    dia.componentInstance.yes.subscribe(x => {
+      this.toaster.succ(x)
+      dia.close()
+    })
+  }
+  constructor(public dialog: MatDialog, private toaster: ToasterService) { }
 
   ngOnInit() {
-  }
-  showError(){
-    console.log("akert")
-    this.toastr.error('Hello world!', 'Toastr fun!');
-  }
-  showInfo(){
-    this.toastr.info('Hello world!', 'Toastr fun!');
-
-  }
-  showSuccess(){
-    this.toastr.success('Hello world!', 'Toastr fun!');
-
   }
 }

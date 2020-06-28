@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { FormsModule } from '@angular/forms' 
+import { FormsModule, FormBuilder, FormGroup } from '@angular/forms' 
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
@@ -47,11 +47,17 @@ import { ToastrModule, GlobalConfig } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CameraDetailsComponent } from './camera-details/camera-details.component';
+import { ServerDetailsComponent } from './server-details/server-details.component';
+
+import {MatChipsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, MatIconModule, MatDialogModule} from '@angular/material/';
+import { ChipperComponent } from './chipper/chipper.component';
+import { TempDialogComponent } from './temp-dialog/temp-dialog.component'
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 const toastOptions:Partial<GlobalConfig>  = {
-  timeOut: 1000,
+  timeOut: 2000,
   progressBar: true,
   progressAnimation: 'decreasing',
   positionClass: 'toast-bottom-right'
@@ -82,6 +88,10 @@ const toastOptions:Partial<GlobalConfig>  = {
     SuspectDetailsComponent,
     PersonDetailsComponent,
     TestsOnlyComponent,
+    CameraDetailsComponent,
+    ServerDetailsComponent,
+    ChipperComponent,
+    TempDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -107,8 +117,20 @@ const toastOptions:Partial<GlobalConfig>  = {
     CommonModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(toastOptions) // ToastrModule added
+
+    //material layout
+    ,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatInputModule,
+    MatIconModule,
+
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    TempDialogComponent
+  ]
 })
 export class AppModule { }

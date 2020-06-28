@@ -1,14 +1,16 @@
-<div class='suspect-details' routerLink="/authoritative/suspects/{{suspect._id}}">
+<div title="Click to view details of {{suspect.fullName}}" class='suspect-details' *ngIf="suspect != null" routerLink="/authoritative/suspects/{{suspect._id}}">
     <div class='image-holder'>
         <img class='image' *ngIf="suspect.pictures.length > 0" src="{{suspect.pictures[0]}}" />
         <div class='no-image' *ngIf="suspect.pictures.length == 0">No Image Available</div>
     </div>
     <div class='details-holder'>
         <label>Full Name: </label>
-        <label>{{suspect.fullName}}</label>
+        <label class='fullName'>{{suspect.fullName}}</label>
+        <!--
         <label>Gender: </label>
         <label>{{suspect.gender}}</label>
         <label>ID: </label>
         <label>{{suspect._id}}</label>
+        -->
     </div>
 </div>

@@ -1,0 +1,16 @@
+<div class='server-details' routerLink="/admin/servers/{{server._id}}">
+    <h3>{{server.name}}</h3>
+
+    <div class='details-holder'>
+        <ion-icon name="wifi-outline"></ion-icon>
+        <label> {{server.url}}
+        </label>
+        <ion-icon name="location-outline"></ion-icon>
+        <label>lat: {{server.latitude | number: '2.4'}}, lng:
+            {{server.longitude | number: '2.4'}}
+        </label>
+        <ion-icon name="server-outline"></ion-icon>
+        <label> {{server._id}}
+        </label>
+    </div>
+</div>

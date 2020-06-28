@@ -19,6 +19,7 @@ export class AdminLoginComponent {
 
 
   login(){
+    this.toaster.info("Please wait! Working on it")
     this.adminService.login(this.email, this.password).subscribe(
       (data: any) => {
         if(data.err){

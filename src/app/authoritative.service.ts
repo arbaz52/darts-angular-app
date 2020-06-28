@@ -52,6 +52,19 @@ export class AuthoritativeService {
     return this.http.get("http://localhost:3000/authoritative/suspects/", httpOptions)
   }
 
+  updateSuspect(suspect) {
+    return this.http.put("http://localhost:3000/authoritative/suspects/"+suspect._id, {
+      suspect
+    }, httpOptions)
+  }
+  deleteSuspect(suspectId) {
+    return this.http.delete("http://localhost:3000/authoritative/suspects/"+suspectId, httpOptions)
+  }
+  
+  searchSuspects(q) {
+    return this.http.get("http://localhost:3000/authoritative/suspects/search/"+q, httpOptions)
+  }
+
 
 
   getAvailablePeopleAdmin() {

@@ -9,20 +9,36 @@ import { ToasterService } from '../toaster.service';
 })
 export class AdminHomeComponent implements OnInit {
 
-  servers: any = []
-  cameras: any = []
+  //implementing searching of cameras at location
+  search = {
+    cameras: {
+      query: "",
+      cameras: [],
+      location: null
+    }
+  }
+  clearCamerasSearchQuery = () => {
+    this.search.cameras.query=''
+    this.search.cameras.location = null
 
-  constructor(private adminService: AdminService, private toaster: ToasterService) { }
-
-  ngOnInit() {
-
-    this.adminService.getCameras().subscribe(
+    this.getCameras()
+  }
+  searchForCamerasAtLocation = () => {
+    this.toaster.info("Looking for cameras, please wait!")
+    var query = this.search.cameras.query
+    if(query == ""){
+      this.getCameras()
+      return
+    }
+    this.adminService.searchCamerasAtLocation(query).subscribe(
       (data: any) => {
         if (data.err) {
           this.toaster.err(data.err.message)
         } else if (data.succ || !(data.err)) {
-          console.log(data)
-          this.cameras = data.cameras
+          this.toaster.succ(data.succ)
+          this.search.cameras.cameras = data.cameras
+          this.search.cameras.location = data.location
+
         }
       },
       (err: any) => {
@@ -32,9 +48,18 @@ export class AdminHomeComponent implements OnInit {
 
       }
     )
+  }
 
 
-    
+  servers: any = []
+  cameras: any = []
+
+  constructor(private adminService: AdminService, private toaster: ToasterService) { }
+
+  ngOnInit() {
+    this.getCameras()
+
+
     this.adminService.getServers().subscribe(
       (data: any) => {
         if (data.err) {
@@ -53,4 +78,25 @@ export class AdminHomeComponent implements OnInit {
     )
   }
 
+
+  getCameras = () => {
+
+    this.adminService.getCameras().subscribe(
+      (data: any) => {
+        if (data.err) {
+          this.toaster.err(data.err.message)
+        } else if (data.succ || !(data.err)) {
+          console.log(data)
+          this.cameras = data.cameras
+        }
+      },
+      (err: any) => {
+        this.toaster.err(err)
+      },
+      () => {
+
+      }
+    )
+
+  }
 }

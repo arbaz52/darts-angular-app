@@ -34,12 +34,7 @@
                 <!-- place cameras here -->
                 <h2>Cameras connected to this server: {{server.cameras.length}}</h2>
                 <div class='cameras'>
-                    <div *ngFor="let camera of server.cameras" class='camera' routerLink="../../cameras/{{camera._id}}">
-                        <p class='id'>ID: {{camera._id}}</p>
-                        <p class='location'>Location: {{camera.latitude | number : '.2' }},{{camera.longitude| number : '1.1' }}</p>
-                        <img src="{{camera.url}}" />
-                        <p>Assigned to server: {{camera.serverId || "No server"}}</p>
-                    </div>
+                    <app-camera-details *ngFor="let camera of server.cameras" routerLink="/admin/cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
                 </div>
             </div>
         </div>

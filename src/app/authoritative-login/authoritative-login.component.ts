@@ -20,6 +20,7 @@ export class AuthoritativeLoginComponent implements OnInit {
 
 
   loginx(){
+    this.toaster.info("Please wait! Working on it")
     this.authoritativeService.login(this.email, this.password).subscribe(
       (data: any) => {
         if(data.err){

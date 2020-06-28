@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   didAuthoritativeLogin: boolean = false
 
   adminLogout() {
+    this.toaster.info("Please wait! Working on it")
     this.adminService.logout().subscribe(
       (data: any) => {
         if (data.err)
@@ -37,6 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   authoritativeLogout() {
+    this.toaster.info("Please wait! Working on it")
     this.authoritativeService.logout().subscribe(
       (data: any) => {
         if (data.err)

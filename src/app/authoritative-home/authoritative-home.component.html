@@ -6,19 +6,6 @@
             <button class='button green' routerLink="./../admins/add">Add Admin</button>
             <button class='button green' routerLink="./../authoritative/add">Add Authoritative Person</button>
         </div>
-        <!-- 
-        <div class='bar'>
-            <h1>Manage Admins</h1>
-            <div class='buttons'>
-                
-            </div>
-        </div>
-        <div class='bar'>
-            <h1>Manage Authoritative Personnel</h1>
-            <div class='buttons'>
-                
-            </div>
-        </div> -->
 
 
         <!-- 
@@ -39,11 +26,23 @@
                 <button routerLink="../suspects/add">Add Suspect</button>
             </div>
         </div>
-        <div class='suspects'>
+
+        <div class='search' *ngIf="search.suspects.query != null">
+            <p>Search for Suspects: </p>
+            <div class='search-bar'>
+                <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.suspects.query" (keyup.enter)="searchForSuspects()" placeholder="Type search query" />
+                <button (click)="clearSuspectsSearchQuery()">Clear</button>
+            </div>
+        </div>
+
+        <div *ngIf="search.suspects.query != ''">
+            <h4>Suspects fitting search query ' {{search.suspects.query}} ': </h4>
+            <div class='suspects'>
+                <app-suspect-details *ngFor="let suspect of search.suspects.suspects" routerLink="../suspects/{{suspect._id}}" [suspect]="suspect"></app-suspect-details>
+            </div>
+        </div>
+        <div *ngIf="search.suspects.query == ''" class='suspects'>
             <div *ngFor="let suspect of suspects" routerLink="../suspects/{{suspect._id}}">
-                <!-- <h3>{{suspect.fullName}}</h3>
-                <p class='id' style='font-size:10px'>ID: {{suspect._id}}</p>
-                <img src="{{suspect.pictures[0]}}" *ngIf="suspect.pictures.length > 0" /> -->
                 <app-suspect-details [suspect]="suspect"></app-suspect-details>
             </div>
         </div>

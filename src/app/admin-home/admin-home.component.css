@@ -24,10 +24,16 @@
 }
 
 .cameras {
+    /*     
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 30px;
-    ;
+    ; */
+}
+
+.cameras-holder {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .camera {
@@ -59,4 +65,39 @@
 
 .server .location {
     font-size: 10px;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.search * {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.search>.search-bar {
+    display: flex;
+    border-radius: 50px;
+    border: 1px solid #888;
+    overflow: hidden;
+}
+
+.search>.search-bar * {
+    display: block;
+    background: transparent;
+    border: none;
+    padding: 0 5px;
+    margin: 0;
+    outline: none;
+}
+
+.search>.search-bar button:hover {
+    background: rgb(199, 65, 65);
+    color: white;
 }

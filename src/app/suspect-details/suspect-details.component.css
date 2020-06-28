@@ -1,4 +1,4 @@
-.suspect-details {
+/* .suspect-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 300px;
@@ -21,4 +21,39 @@
 
 .suspect-details .details-holder label:nth-child(2n+1) {
     font-weight: normal;
+} */
+
+.suspect-details {
+    width: 170px;
+    padding: 20px 10px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #888;
+    text-align: center;
+    animation: all 0.3s ease-in-out;
+}
+
+.suspect-details:hover {
+    box-shadow: 0 0 20px #888;
+    cursor: pointer;
+}
+
+.suspect-details .details-holder {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.suspect-details .details-holder label:nth-child(2n) {
+    font-weight: normal;
+}
+
+.suspect-details .fullName {
+    text-transform: capitalize;
+}
+
+.suspect-details .image {
+    border-radius: 50%;
 }

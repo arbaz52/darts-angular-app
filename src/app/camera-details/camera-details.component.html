@@ -1,0 +1,21 @@
+<div class='camera-details'>
+    <div class='image-holder'>
+        <img class='image' *ngIf="validImg" src="{{camera.url}}" (error)="validImg=false" />
+        <div *ngIf="!validImg">Streaming unavailable for this camera</div>
+    </div>
+    <div class='details-holder'>
+        <ion-icon name="wifi-outline"></ion-icon>
+        <label> {{camera.url}}
+        </label>
+        <ion-icon name="location-outline"></ion-icon>
+        <label>lat: {{camera.latitude | number: '2.4'}}, lng:
+            {{camera.longitude | number: '2.4'}}
+        </label>
+        <ion-icon name="videocam-outline"></ion-icon>
+        <label> {{camera._id}}
+        </label>
+        <ion-icon name="server-outline"></ion-icon>
+        <label> connected to: {{camera.serverId || "No server"}}
+        </label>
+    </div>
+</div>

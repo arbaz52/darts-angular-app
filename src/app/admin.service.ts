@@ -45,6 +45,9 @@ export class AdminService {
   getCamera(cameraId){
     return this.http.get("http://localhost:3000/admin/cameras/"+cameraId, httpOptions)
   }
+  searchCamerasAtLocation(q){
+    return this.http.get(url+"admin/cameras/search/"+q, httpOptions)
+  }
 
 
   updateCamera(cameraId, camera){

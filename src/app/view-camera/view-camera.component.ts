@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Route } from '@angular/compiler/src/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToasterService } from '../toaster.service';
 
 @Component({
@@ -10,6 +10,9 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./view-camera.component.css']
 })
 export class ViewCameraComponent implements OnInit {
+  //checking video streams urls
+  validCameraVideoUrl:boolean = true;
+  validServerVideoUrl:boolean = true;
   
   videoOrigin: string = 'camera';
   server: any;
@@ -21,11 +24,9 @@ export class ViewCameraComponent implements OnInit {
     latitude: number,
     url: string,
     serverId: string
-  } = {
-    _id: "", longitude: 0, latitude: 0, url: "", serverId: ""
   }
   cameraId: string
-  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private toaster: ToasterService) { }
+  constructor(private adminService: AdminService, private activatedRoute: ActivatedRoute, private toaster: ToasterService,private router: Router) { }
 
   ngOnInit() {
     this.cameraId = this.activatedRoute.snapshot.paramMap.get("cameraId")
@@ -99,13 +100,14 @@ export class ViewCameraComponent implements OnInit {
     this.adminService.deleteCamera(this.cameraId).subscribe(
       (data: any) => {
         if(data.err){
-          alert(data.err.message)
+          this.toaster.err(data.err.message)
         }else if(data.succ){
-          alert(data.succ.message)
+          this.toaster.succ(data.succ.message)
+          this.router.navigate(["admin/home"])
         }
       },
       (err: any) => {
-        alert(err)
+        this.toaster.err(err)
       },
       () => {
 

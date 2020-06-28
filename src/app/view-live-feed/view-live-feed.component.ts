@@ -10,6 +10,10 @@ import { ToasterService } from '../toaster.service';
 })
 export class ViewLiveFeedComponent implements OnInit {
 
+  //checking video streams urls
+  validCameraVideoUrl:boolean = true;
+  validServerVideoUrl:boolean = true;
+
   videoOrigin: string = 'camera';
   server: any;
 
@@ -20,9 +24,7 @@ export class ViewLiveFeedComponent implements OnInit {
     latitude: number,
     url: string,
     serverId: string
-  } = {
-    _id: "", longitude: 0, latitude: 0, url: "", serverId: ""
-  }
+  } 
   cameraId: string
   constructor(private apService: AuthoritativeService, private activatedRoute: ActivatedRoute, private toaster: ToasterService) { }
 

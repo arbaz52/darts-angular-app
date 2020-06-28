@@ -1,5 +1,5 @@
 * {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: Lato, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 html,
@@ -23,8 +23,10 @@ app-root {
 
 header {
     height: 100px;
-    background: #333;
-    color: white;
+    /* background: #333; */
+    /* color: white; */
+    background: white;
+    box-shadow: 0 0 10px #aaa;
     position: fixed;
     top: 0;
     left: 0;
@@ -56,17 +58,28 @@ header .wrapper ul {
 }
 
 header .wrapper ul li {
-    padding: 0 10px;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+    margin: 30px 0;
+    margin-left: 20px;
+    border-radius: 20px;
+    background: #f39c12;
+    color: white;
+}
+
+header .wrapper ul li a {
+    font-weight: bold;
 }
 
 header .wrapper ul li:hover {
-    background: #eee;
-    color: #333;
+    background: #2c3e50;
+    color: #fff !important;
     cursor: pointer;
 }
 
 header .wrapper ul li:hover a {
-    color: #333;
+    color: #fff;
     display: block;
 }
 
@@ -80,15 +93,30 @@ header .title {
     ;
 }
 
+header .logo {
+    display: block;
+    height: 80px;
+    width: 120px;
+    margin: 10px 0;
+    background: url("./assets/images/logo.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
 #container .wrapper {
     width: 80%;
     margin: auto;
 }
 
 button {
-    padding: 10px 5px;
-    border-radius: 10px;
-    ;
+    padding: 10px 25px;
+    border-radius: 20px !important;
+}
+
+button:hover {
+    background: #d35400 !important;
+    color: white !important;
 }
 
 p.warning {
@@ -100,22 +128,6 @@ p.warning {
 h1.warning,
 h2.warning {
     color: red;
-}
-
-button.green {
-    background: #27ae60;
-    color: white;
-}
-
-button.red {
-    background: #c0392b;
-    color: white;
-}
-
-button.red,
-button.green {
-    border-radius: 5px;
-    margin: 5px 10px;
 }
 
 .person-holder {
@@ -146,3 +158,97 @@ button.green {
 .done:before {
     margin-right: 20px;
 }
+
+input[type='text'],
+input[type='password'],
+input[type='search'],
+input[type='email'],
+input[type='number'],
+input[type='url'],
+button,
+input[type='submit'],
+input[type='button'],
+select {
+    border-radius: 20px;
+    border: 1px solid #888;
+    outline: none;
+    padding: 0 !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+button,
+input[type='submit'],
+input[type='button'] {
+    border-radius: 20px;
+    background: #f39c12 !important;
+    color: white !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    margin-bottom: 20px !important;
+}
+
+button.green {
+    background: #27ae60 !important;
+    color: white;
+}
+
+button.red {
+    background: #c0392b !important;
+    color: white;
+}
+
+button.red,
+button.green {
+    margin: 5px 10px;
+}
+
+.error {
+    background: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.search * {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.search>.search-bar {
+    display: flex;
+    border-radius: 50px;
+    border: 1px solid #888;
+    overflow: hidden;
+}
+
+.search>.search-bar * {
+    display: block;
+    background: transparent;
+    border: none;
+    padding: 0 5px;
+    margin: 0;
+    outline: none;
+}
+
+.search>.search-bar button:hover {
+    background: rgb(199, 65, 65);
+    color: white;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

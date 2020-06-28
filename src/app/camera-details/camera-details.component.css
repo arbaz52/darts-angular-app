@@ -1,0 +1,44 @@
+.camera-details {
+    width: 300px;
+    margin: 10px;
+    box-shadow: 0 0 10px #888;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    ;
+}
+
+.camera-details:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px #888;
+}
+
+.camera-details .image-holder {
+    min-height: 200px !important;
+    line-height: 200px;
+    margin-bottom: 10px;
+}
+
+.camera-details .image-holder img {
+    border-radius: 10px;
+    ;
+}
+
+.camera-details .details-holder {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    text-align: left;
+}
+
+.camera-details .details-holder label:nth-child(2n) {
+    font-weight: normal;
+}
+
+.camera-details .details-holder * {
+    font-weight: bold;
+    background-color: #f39c12;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    line-height: 15px;
+}

@@ -1,0 +1,38 @@
+.server-details {
+    width: 300px;
+    margin: 10px;
+    box-shadow: 0 0 10px #888;
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 20px;
+    ;
+}
+
+.server-details:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px #888;
+}
+
+.server-details .image-holder {
+    min-height: 200px !important;
+    line-height: 200px;
+}
+
+.server-details .details-holder {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    text-align: left;
+}
+
+.server-details .details-holder label:nth-child(2n) {
+    font-weight: normal;
+}
+
+.server-details .details-holder * {
+    font-weight: bold;
+    background-color: #f39c12;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    line-height: 15px;
+}

@@ -1,7 +1,7 @@
 <div id='container'>
     <div class='wrapper'>
-        <h1>Viewing Suspect: {{suspect.fullName}}</h1>
-        <p>{{suspect._id}}</p>
+        <h1 style='text-transform: capitalize;'>Viewing Suspect: {{suspect.fullName}}</h1>
+        <p>Suspect ID: {{suspect._id}}</p>
         <div class='frame'>
             <div class='image-viewer'>
                 <div class='current-image'>
@@ -11,9 +11,10 @@
                 <h3>All Pictures: </h3>
                 <p>Upload pictures:</p>
                 <input type="file" ng2FileSelect [uploader]="uploader" multiple (onFileSelected)="uploadFiles()" />
+                <br>
                 <div class='all-images'>
                     <div *ngFor="let image of suspect.pictures">
-                        <img src="{{image}}" />
+                        <img src="{{image}}" (click)="clickOnImage(image)" />
                     </div>
                 </div>
             </div>
@@ -33,12 +34,11 @@
                     </select>
 
                     <label>Tags (separated by commas): </label>
-                    <textarea [(ngModel)]="tags" name='tags'></textarea>
+                    <!-- <textarea [(ngModel)]="tags" name='tags'></textarea> -->
+                    <app-chipper [items]="suspect.tags" (change)="updateSuspectTags($event)"></app-chipper>
+                    <button (click)="deleteSuspect()" class='button red'>Delete</button>
 
-                    <label for=""></label>
-                    <!-- <button (click)="deleteServer()" style="background-color:#e74c3c; color: white;">Delete</button> -->
-
-                    <!-- <button (click)="updateServer()" style="background-color:#2980b9; color: white;">Update</button> -->
+                    <button (click)="updateSuspect()" class='button green'>Update</button>
 
                 </div>
             </form>
@@ -58,7 +58,7 @@
                     <br>
                     <agm-map [latitude]="comsats.latitude" [longitude]="comsats.longitude" [zoom]="16" [zoom]="16">
 
-                        <agm-marker class='alert-marker' *ngFor="let item of alerts" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName"></agm-marker>
+                        <agm-marker class='alert-marker' *ngFor="let item of alerts" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName" (markerClick)="viewAlert(item)"></agm-marker>
                         <agm-polyline *ngFor="let path of tpl" [editable]="false">
                             <agm-polyline-point *ngFor="let p of path" [latitude]="p[1]" [longitude]="p[0]">
                             </agm-polyline-point>
