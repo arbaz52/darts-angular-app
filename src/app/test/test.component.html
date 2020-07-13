@@ -16,31 +16,38 @@
             <div *ngIf="filter.alerts">
                 <agm-marker class='alert-marker' *ngFor="let item of alerts" (markerClick)="viewAlert(item)" [longitude]="item.longitude" [latitude]="item.latitude" [iconUrl]="item.icon" [title]="'alert: ' + item._id" [label]="'Suspect:' + item.suspectId.fullName"></agm-marker>
             </div>
-            <!-- 
-            <div *ngIf="filter.paths">
-                <div *ngFor="let path of paths_keys">
-                    <div *ngFor="let point of paths[path]; let i = index">
-                        <agm-direction *ngIf="i > 0" [origin]="paths[path][i-1]" [destination]="paths[path][i]">
-                        </agm-direction>
-                    </div>
-                </div>
-            </div>
-            -->
+            <!--
             <div *ngIf="filter.paths">
                 <agm-polyline *ngFor="let path of tpl" [editable]="false">
                     <agm-polyline-point *ngFor="let p of path" [latitude]="p[1]" [longitude]="p[0]">
                     </agm-polyline-point>
                 </agm-polyline>
             </div>
+            -->
+            <div *ngIf="filter.paths">
+                <agm-polyline *ngFor="let suspectId of tpl_keys" [editable]="false">
+                    <agm-polyline-point *ngFor="let p of tpl[suspectId]" [latitude]="p[1]" [longitude]="p[0]">
+                    </agm-polyline-point>
+                </agm-polyline>
+            </div>
+            <div *ngIf="showRealTimeOperations">
+                <agm-polyline *ngFor="let alertId of onGoingOperationsPaths_keys" [editable]="false" [strokeColor]="'red'">
+                    <agm-polyline-point *ngFor="let p of onGoingOperationsPaths[alertId]" [latitude]="p[1]" [longitude]="p[0]">
+                    </agm-polyline-point>
+                </agm-polyline>
+            </div>
         </agm-map>
         <div>
-            <h2>Filter</h2>
+            <h2>Visible on map</h2>
             <div class='filters-holder'>
                 <div *ngFor="let item of filter_keys">
-                    <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item}}
+                    <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item | titlecase}}
+                </div>
+                <div>
+                    <input type='checkbox' checked="Yes" (change)="showRealTimeOperations = $event.target.checked"> - Show ongoing operations
                 </div>
             </div>
-            <h2>Navigation</h2>
+            <h2>Search for locations</h2>
             <div>
                 <p>Search for places</p>
                 <input type='search' [(ngModel)]="search.query" (keyup.enter)="searchLocation(search.query)" />
@@ -52,8 +59,8 @@
                     </li>
                 </ul>
             </div>
+            <h2>Move map over:</h2>
             <div>
-                <p>Move map over:</p>
                 <p>QRUnits: </p>
                 <select (change)="showQRUnit($event.target.value)">
                     <option value=""></option>

@@ -31,19 +31,8 @@
                     <app-person-details [person]="p"></app-person-details>
                 </div>
             </div>
-
             <h2>Add A New Person</h2>
-            <label>Picture</label>
-            <input type='file' ng2FileSelect [uploader]="uploader" name="picture" (onFileSelected)="personPictureSelected($event)">
-            <label>Full Name</label>
-            <input type='text' [(ngModel)]="person.fullName" name="fullName">
-            <label>Gender</label>
-            <select name="gender" [(ngModel)]="person.gender">
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="undisclosed">Undisclosed</option>
-            </select>
-            <button (click)="addPerson()">Add a new Person</button>
+            <app-add-person [toaster]="toaster" [url]="url" (personAdded)="people.push($event)"></app-add-person>
 
             <h1>All Done</h1>
             <button class='button green' (click)="addQRUnit()">Add this QRUnit</button>

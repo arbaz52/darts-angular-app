@@ -2,4 +2,9 @@
     <div class="wrapper">
         <button (click)="open()">Click to open dialog</button>
     </div>
+    <div class="wrapper">
+        <h1>Testing map with navigation</h1>
+        {{location | json}}
+        <app-map-with-search (locationSelected)="location=$event"></app-map-with-search>
+    </div>
 </div>

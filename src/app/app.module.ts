@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,9 +50,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CameraDetailsComponent } from './camera-details/camera-details.component';
 import { ServerDetailsComponent } from './server-details/server-details.component';
 
-import {MatChipsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, MatIconModule, MatDialogModule} from '@angular/material/';
+import {MatChipsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, MatIconModule, MatDialogModule, MatSliderModule, GestureConfig} from '@angular/material/';
 import { ChipperComponent } from './chipper/chipper.component';
-import { TempDialogComponent } from './temp-dialog/temp-dialog.component'
+import { TempDialogComponent } from './temp-dialog/temp-dialog.component';
+import { AddPersonComponent } from './add-person/add-person.component';
+import { MapWithSearchComponent } from './map-with-search/map-with-search.component';
+import { AdjustPreprocessingComponent } from './adjust-preprocessing/adjust-preprocessing.component'
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
@@ -92,6 +95,9 @@ const toastOptions:Partial<GlobalConfig>  = {
     ServerDetailsComponent,
     ChipperComponent,
     TempDialogComponent,
+    AddPersonComponent,
+    MapWithSearchComponent,
+    AdjustPreprocessingComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,10 +130,12 @@ const toastOptions:Partial<GlobalConfig>  = {
     MatChipsModule,
     MatInputModule,
     MatIconModule,
-
-    MatDialogModule
+    MatDialogModule,
+    MatSliderModule
   ],
-  providers: [],
+  providers: [
+    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     TempDialogComponent

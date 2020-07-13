@@ -146,7 +146,7 @@ export class ViewSuspectComponent implements OnInit {
 
     this.suspectId = this.activatedRoute.snapshot.paramMap.get("suspectId")
     this.uploader = new FileUploader({
-      url: "http://localhost:3000/authoritative/suspects/" + this.suspectId + "/picture",
+      url: "https://darts-web-server.herokuapp.com/authoritative/suspects/" + this.suspectId + "/picture",
       method: "PUT",
       itemAlias: "picture"
     });

@@ -136,7 +136,7 @@ h2.warning {
 }
 
 .person-holder .person {
-    width: 100px;
+    /* width: 100px; */
     margin: 10px 15px;
     padding: 5px;
 }
@@ -250,5 +250,13 @@ button.green {
     background: rgb(199, 65, 65);
     color: white;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

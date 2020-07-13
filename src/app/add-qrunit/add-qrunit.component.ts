@@ -11,7 +11,7 @@ import { ToasterService } from '../toaster.service';
 })
 export class AddQrunitComponent implements OnInit {
   name: string = "";
-
+  url: string = "https://darts-web-server.herokuapp.com/admin/qrunit/person/"
   person: {
     fullName: string,
     gender: string,

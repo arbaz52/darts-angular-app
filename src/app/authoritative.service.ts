@@ -7,7 +7,8 @@ const httpOptions = {
   }), withCredentials: true,
 };
 
-const url: string = "http://localhost:3000/"
+// const url: string = "http://localhost:3000/";
+const url: string = "https://darts-web-server.herokuapp.com/"
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class AuthoritativeService {
 
 
   login(email, password) {
-    return this.http.post("http://localhost:3000/authoritative/login", {
+    return this.http.post(url+"authoritative/login", {
       user: {
         email, password
       }
@@ -28,11 +29,11 @@ export class AuthoritativeService {
   }
 
   logout() {
-    return this.http.post("http://localhost:3000/authoritative/logout", {}, httpOptions)
+    return this.http.post(url+"authoritative/logout", {}, httpOptions)
   }
 
   isLoggedIn() {
-    return this.http.get("http://localhost:3000/authoritative/isLoggedIn", httpOptions)
+    return this.http.get(url+"authoritative/isLoggedIn", httpOptions)
   }
 
 
@@ -41,28 +42,28 @@ export class AuthoritativeService {
 
 
   addSuspect(suspect) {
-    return this.http.post("http://localhost:3000/authoritative/suspects/", {
+    return this.http.post(url+"authoritative/suspects/", {
       suspect
     }, httpOptions)
   }
   getSuspect(suspectId) {
-    return this.http.get("http://localhost:3000/authoritative/suspects/" + suspectId, httpOptions)
+    return this.http.get(url+"authoritative/suspects/" + suspectId, httpOptions)
   }
   getSuspects() {
-    return this.http.get("http://localhost:3000/authoritative/suspects/", httpOptions)
+    return this.http.get(url+"authoritative/suspects/", httpOptions)
   }
 
   updateSuspect(suspect) {
-    return this.http.put("http://localhost:3000/authoritative/suspects/"+suspect._id, {
+    return this.http.put(url+"authoritative/suspects/"+suspect._id, {
       suspect
     }, httpOptions)
   }
   deleteSuspect(suspectId) {
-    return this.http.delete("http://localhost:3000/authoritative/suspects/"+suspectId, httpOptions)
+    return this.http.delete(url+"authoritative/suspects/"+suspectId, httpOptions)
   }
   
   searchSuspects(q) {
-    return this.http.get("http://localhost:3000/authoritative/suspects/search/"+q, httpOptions)
+    return this.http.get(url+"authoritative/suspects/search/"+q, httpOptions)
   }
 
 
@@ -115,9 +116,9 @@ export class AuthoritativeService {
   }
   
   getCamera(cameraId){
-    return this.http.get("http://localhost:3000/authoritative/map/camera/"+cameraId, httpOptions)
+    return this.http.get(url+"authoritative/map/camera/"+cameraId, httpOptions)
   }
   getAlert(alertId){
-    return this.http.get("http://localhost:3000/authoritative/map/alert/"+alertId, httpOptions)
+    return this.http.get(url+"authoritative/map/alert/"+alertId, httpOptions)
   }
 }

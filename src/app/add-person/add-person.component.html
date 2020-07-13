@@ -1,0 +1,21 @@
+<div class='add-person'>
+    <div class='image-holder'>
+        <label for="" *ngIf="person.picture_url != null">Selected Image</label>
+
+        <img *ngIf="person.picture_url != null" [src]="person.picture_url" alt="" class='image'>
+        <label>Picture</label>
+        <input type='file' ng2FileSelect [uploader]="uploader" name="picture" (onFileSelected)="personPictureSelected($event)" (change)="pictureChanged($event)">
+    </div>
+    <div class='data-holder'>
+        <label>Full Name</label>
+        <input type='text' [(ngModel)]="person.fullName" name="fullName">
+        <label>Gender</label>
+        <select name="gender" [(ngModel)]="person.gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="undisclosed">Undisclosed</option>
+        </select>
+        <label for=""></label>
+        <button (click)="addPerson()">Add a new Person</button>
+    </div>
+</div>

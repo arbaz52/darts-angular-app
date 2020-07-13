@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 import { MatDialog } from '@angular/material';
+
 import { TempDialogComponent, DialogData } from '../temp-dialog/temp-dialog.component';
 import { ToasterService } from '../toaster.service';
 
@@ -32,6 +33,8 @@ export class TestsOnlyComponent implements OnInit {
       dia.close()
     })
   }
+
+  location: {} = {}
   constructor(public dialog: MatDialog, private toaster: ToasterService) { }
 
   ngOnInit() {

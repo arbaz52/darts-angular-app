@@ -15,12 +15,12 @@ export class TestComponent implements OnInit {
 
   viewLiveFeed = (camera) => {
     console.log('working')
-    this.router.navigate(["authoritative/live/"+camera._id])
+    this.router.navigate(["authoritative/live/" + camera._id])
   }
 
   viewAlert = (alert) => {
     console.log('working')
-    this.router.navigate(["authoritative/alert/"+alert._id])
+    this.router.navigate(["authoritative/alert/" + alert._id])
   }
 
   //searching
@@ -87,9 +87,12 @@ export class TestComponent implements OnInit {
     servers: true,
     qrunits: true,
     alerts: true,
-    paths: true
+    paths: true,
   }
   filter_keys: any[] = [];
+
+  showRealTimeOperations = true;
+
 
   cameras: any[];
   servers: any[];
@@ -108,27 +111,44 @@ export class TestComponent implements OnInit {
     width: 30,
     height: 30
   }
+  labelOrigin: {} = { x: 10, y: 40 }
   vehicle_icon: {} = {
-    url: "./assets/images/map-icons/people-sharp.svg",
-    scaledSize: this.scaledSize
+    url: "./assets/images/map-icons/police.svg",
+    scaledSize: this.scaledSize,
+
+    labelOrigin: this.labelOrigin
+
   }
   camera_icon: {} = {
-    url: "./assets/images/map-icons/videocam-sharp.svg",
-    scaledSize: this.scaledSize
+    url: "./assets/images/map-icons/cctv.svg",
+    // url: '<ion-icon name="airplane"></ion-icon>',
+    scaledSize: this.scaledSize,
+
+    labelOrigin: this.labelOrigin
+
   }
   server_icon: {} = {
-    url: "./assets/images/map-icons/server-sharp.svg",
-    scaledSize: this.scaledSize
+    url: "./assets/images/map-icons/database.svg",
+    scaledSize: this.scaledSize,
+
+    labelOrigin: this.labelOrigin
+
   }
   alert_icon: {} = {
-    url: "./assets/images/map-icons/alert-circle-sharp.svg",
+    url: "./assets/images/map-icons/warning.svg",
     scaledSize: this.scaledSize,
+
+    labelOrigin: this.labelOrigin
+
   }
 
   paths: {} = {};
-  tpl: any[] = []
+  tpl: {} = {}
+  tpl_keys: string[] = [];
+
   paths_keys: string[];
   generatePaths = () => {
+    this.paths = {};
     for (var i = 0; i < this.alerts.length; i++) {
       var alert = this.alerts[i]
       var suspectId = alert.suspectId._id
@@ -147,23 +167,95 @@ export class TestComponent implements OnInit {
     this.paths_keys = Object.keys(this.paths)
 
 
-    this.tpl = []
     this.paths_keys.forEach((k) => {
+      var suspectId = k;
       var path = this.paths[k]
       this.tplapi.getRoute(path).subscribe((data: any) => {
         if (data.err || data.error) {
           this.toaster.err(data.err)
         } else {
-          this.tpl.push(data.p[0].p)
+          // this.tpl.push(data.p[0].p)
+
           // console.log(data.p[0].p)
           // this.servers = data.servers
+
+          this.tpl[suspectId] = data.p[0].p
+          this.tpl_keys = Object.keys(this.tpl)
+
         }
       }, (err) => {
         console.log(err)
       })
     })
 
+    this.generateOnGoingOperationsPaths()
+  }
 
+  /*
+  check all alerts
+  if an alert is on-going draw a path from the qrunit's location (handler) to alert's location (being handled!)
+  */
+  onGoingOperationsPaths = {}
+  onGoingOperationsPaths_keys: string[] = []
+  generateOnGoingOperationsPaths = () => {
+    if (this.alerts == null)
+      return
+
+    console.log("generating ongoing operations")
+    this.alerts.forEach(alert => {
+      if (alert.qrunit) {
+        //alert has been assigned to this qrunit
+        if (!alert.closed_alert) {
+          console.log("ongoing alert: " + alert._id)
+          //alert has not been closed yet!
+          //draw route from qrunit's location to alert's location
+          //get qrunit
+          let qrunit = null
+          if (this.qrunits != null) {
+
+            this.qrunits.forEach(unit => {
+              console.log(unit, qrunit, alert)
+              if (unit._id == alert.qrunit._id) {
+                qrunit = unit;
+              }
+            })
+          }
+
+          if (qrunit != null) {
+            
+          console.log("ongoing alert: ",alert, ", qrunit: ", qrunit)
+            let path = []
+            path.push({
+              lat: qrunit.latitude,
+              lng: qrunit.longitude
+            })
+            path.push({
+              lat: alert.latitude,
+              lng: alert.longitude
+            })
+            this.tplapi.getRoute(path).subscribe((data: any) => {
+              if (data.err || data.error) {
+                this.toaster.err(data.err || data.error)
+              } else {
+                let route = data.p[0].p
+                //update or new entry
+                this.onGoingOperationsPaths[alert._id] = route
+                this.onGoingOperationsPaths_keys = Object.keys(this.onGoingOperationsPaths)
+
+              }
+            }, (err) => {
+              console.log(err)
+            })
+          }
+
+        } else {
+          //alert has been closed!
+          //change icon to something friendly!
+          delete this.onGoingOperationsPaths[alert._id]
+          this.onGoingOperationsPaths_keys = Object.keys(this.onGoingOperationsPaths)
+        }
+      }
+    })
   }
 
   constructor(private fbdbs: FirebasedatabaseService, private apService: AuthoritativeService, private tplapi: TplapiService, private router: Router, private toaster: ToasterService) { }
@@ -222,10 +314,14 @@ export class TestComponent implements OnInit {
         this.alerts = data.alerts
         for (var i = 0; i < this.alerts.length; i++) {
           var alert = this.alerts[i]
+          /*
           alert.icon = {
             url: alert.suspectId.pictures[0],
-            scaledSize: this.scaledSize
+            scaledSize: this.scaledSize,
+            labelOrigin: this.labelOrigin
           }
+          */
+          alert.icon = this.alert_icon
 
         }
         this.generatePaths();
@@ -254,12 +350,16 @@ export class TestComponent implements OnInit {
           }
         }
       })
+      this.getAlertsFromServer();
     })
 
     this.fbdbs.getAlerts().subscribe(items => {
       this.getAlertsFromServer()
     })
-
-
+    /*
+    setInterval(() => {
+      this.getAlertsFromServer()
+    }, 10000)
+    */
   }
 }

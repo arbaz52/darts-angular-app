@@ -25,6 +25,7 @@
                         <div style='margin: 30px 0' class='error' *ngIf="!validServerVideoUrl">Server streaming unavailable for this camera - check url and make sure server is running</div>
                     </div>
 
+                    <app-adjust-preprocessing class='aapc' [cameraId]="cameraId"></app-adjust-preprocessing>
                 </div>
                 <agm-map (mapClick)="choseThisLocation($event)" class='location-on-map' [latitude]="camera.latitude" [longitude]="camera.longitude" [zoom]="16">
                     <agm-marker [longitude]="camera.longitude" [latitude]="camera.latitude"></agm-marker>

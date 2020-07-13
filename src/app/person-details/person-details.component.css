@@ -1,4 +1,4 @@
-.person-details {
+/* .person-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 300px;
@@ -21,4 +21,67 @@
 
 .person-details .details-holder label:nth-child(2n+1) {
     font-weight: normal;
+} */
+
+
+/* .person-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 300px;
+    margin: 5px 10px;
+    cursor: pointer;
+    grid-gap: 10px;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+.person-details:hover {
+    background: #999;
+}
+
+.person-details .details-holder {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+}
+
+.person-details .details-holder label:nth-child(2n+1) {
+    font-weight: normal;
+} */
+
+.person-details {
+    width: 130px;
+    padding: 20px 10px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #888;
+    text-align: center;
+    animation: all 0.3s ease-in-out;
+    margin: 10px;
+}
+
+.person-details:hover {
+    box-shadow: 0 0 20px #888;
+    cursor: pointer;
+}
+
+.person-details .details-holder {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1px;
+    overflow: hidden;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.person-details .details-holder label:nth-child(2n) {
+    font-weight: normal;
+}
+
+.person-details .fullName {
+    text-transform: capitalize;
+}
+
+.person-details .image {
+    border-radius: 50%;
 }

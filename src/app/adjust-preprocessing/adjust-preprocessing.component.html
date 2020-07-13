@@ -1,0 +1,20 @@
+<div class="adjust-preprocessing">
+    <h3>Preprocess CCTV footage </h3>
+    <div>
+        <label for="">Brightness</label>
+        <mat-slider thumbLabel min="0" max="4" step="0.1" [(ngModel)]="brightness"></mat-slider>
+        <input type='number' [(ngModel)]="brightness" />
+
+        <label for="">De Noise (Reduce noise if any)</label>
+        <mat-slider thumbLabel min="0" max="10" step="1" [(ngModel)]="denoise"></mat-slider>
+        <input type='number' [(ngModel)]="denoise" />
+
+        <label for="">Sharpness</label>
+        <mat-slider thumbLabel min="-2" max="4" step="0.1" [(ngModel)]="sharpness"></mat-slider>
+        <input type='number' [(ngModel)]="sharpness" />
+
+        <label for=""></label>
+        <label for=""></label>
+        <button (click)="updateCameraPreprocessingValues()">Update</button>
+    </div>
+</div>

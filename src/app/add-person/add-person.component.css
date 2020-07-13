@@ -1,0 +1,21 @@
+.add-person {
+    width: 400px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.add-person .image-holder .image {
+    max-width: 100px;
+}
+
+.add-person>.image-holder {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr;
+}
+
+.add-person>.data-holder {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}

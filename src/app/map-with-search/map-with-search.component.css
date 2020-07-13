@@ -1,0 +1,8 @@
+.map-with-navigation {
+    width: 100%;
+}
+
+.map-with-navigation .map {
+    width: 100%;
+    height: 300px;
+}

@@ -10,6 +10,7 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./add-admin.component.css']
 })
 export class AddAdminComponent implements OnInit {
+  url: string = "https://darts-web-server.herokuapp.com/authoritative/admin/person/"
   priv: any[] = [{
     name: "manage servers",
     checked: false
@@ -155,6 +156,12 @@ export class AddAdminComponent implements OnInit {
 
       }
     )
+  }
+
+
+  personAdded(person) {
+    this.people.push(person)
+    this.selectPerson(person, 0);
   }
   
 }

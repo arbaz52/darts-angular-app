@@ -159,4 +159,10 @@ export class AddAuthoritativeComponent implements OnInit {
     )
   }
 
+  
+  personAdded(person) {
+    this.people.push(person)
+    this.selectPerson(person, 0);
+  }
+
 }

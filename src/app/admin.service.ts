@@ -7,7 +7,8 @@ const httpOptions = {
   }), withCredentials: true,
 };
 
-const url: string = "http://localhost:3000/"
+// const url: string = "http://localhost:3000/"
+const url: string = "https://darts-web-server.herokuapp.com/"
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class AdminService {
   constructor(private http: HttpClient) { }
 
   login(email, password) {
-    return this.http.post("http://localhost:3000/admin/login", {
+    return this.http.post(url+"admin/login", {
       user: {
         email, password
       }
@@ -25,25 +26,25 @@ export class AdminService {
   }
 
   logout() {
-    return this.http.post("http://localhost:3000/admin/logout", {}, httpOptions)
+    return this.http.post(url+"admin/logout", {}, httpOptions)
   }
 
 
   isLoggedIn() {
-    return this.http.get("http://localhost:3000/admin/isLoggedIn", httpOptions)
+    return this.http.get(url+"admin/isLoggedIn", httpOptions)
   }
 
 
   addCamera(camera) {
-    return this.http.post("http://localhost:3000/admin/cameras/", {
+    return this.http.post(url+"admin/cameras/", {
       camera
     }, httpOptions)
   }
   getCameras(){
-    return this.http.get("http://localhost:3000/admin/cameras/", httpOptions)
+    return this.http.get(url+"admin/cameras/", httpOptions)
   }
   getCamera(cameraId){
-    return this.http.get("http://localhost:3000/admin/cameras/"+cameraId, httpOptions)
+    return this.http.get(url+"admin/cameras/"+cameraId, httpOptions)
   }
   searchCamerasAtLocation(q){
     return this.http.get(url+"admin/cameras/search/"+q, httpOptions)
@@ -51,13 +52,13 @@ export class AdminService {
 
 
   updateCamera(cameraId, camera){
-    return this.http.put("http://localhost:3000/admin/cameras/"+cameraId, {
+    return this.http.put(url+"admin/cameras/"+cameraId, {
       camera
     }, httpOptions)
   }
 
   deleteCamera(cameraId){
-    return this.http.delete("http://localhost:3000/admin/cameras/"+cameraId, httpOptions)
+    return this.http.delete(url+"admin/cameras/"+cameraId, httpOptions)
   }
 
   autoAssign(){
@@ -71,26 +72,26 @@ export class AdminService {
 
 
   addServer(server) {
-    return this.http.post("http://localhost:3000/admin/servers/", {
+    return this.http.post(url+"admin/servers/", {
       server
     }, httpOptions)
   }
   getServers(){
-    return this.http.get("http://localhost:3000/admin/servers/", httpOptions)
+    return this.http.get(url+"admin/servers/", httpOptions)
   }
   getServer(serverId){
-    return this.http.get("http://localhost:3000/admin/servers/"+serverId, httpOptions)
+    return this.http.get(url+"admin/servers/"+serverId, httpOptions)
   }
 
 
   updateServer(serverId, server){
-    return this.http.put("http://localhost:3000/admin/servers/"+serverId, {
+    return this.http.put(url+"admin/servers/"+serverId, {
       server
     }, httpOptions)
   }
 
   deleteServer(serverId){
-    return this.http.delete("http://localhost:3000/admin/servers/"+serverId, httpOptions)
+    return this.http.delete(url+"admin/servers/"+serverId, httpOptions)
   }
                    
 
@@ -104,5 +105,13 @@ export class AdminService {
     return this.http.post(url+"admin/qrunit/", {
       qrunit
     }, httpOptions)
+  }
+
+
+  getCameraPreprocessingValues(cameraId: string){
+    return this.http.get(url+"admin/cameras/"+cameraId+"/preprocessing", httpOptions)
+  }
+  updateCameraPreprocessingValues(cameraId: string, pre: {}){
+    return this.http.put(url+"admin/cameras/"+cameraId+"/preprocessing", {pre}, httpOptions)
   }
 }

@@ -5,7 +5,8 @@
         <h2>Select Person</h2>
         <div>
             <div id='available-admins'>
-                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Available People</h3>
+                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Available People
+                </h3>
                 <div *ngIf="admin.personId == ''">
                     <p>Click to select the person</p>
 
@@ -19,20 +20,13 @@
                 </div>
             </div>
             <div>
-                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Add a person</h3>
+                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Add a person
+                </h3>
                 <div *ngIf="admin.personId == ''">
-                    <p>Person information does not exist in the database?</p>
-                    <label for="">*Provide a display picture</label>
-                    <input type='file' ng2FileSelect [uploader]="uploader" name="picture" (onFileSelected)="personPictureSelected($event)">
-                    <label>Full Name</label>
-                    <input type='text' [(ngModel)]="person.fullName" name="fullName">
-                    <label>Gender</label>
-                    <select name="gender" [(ngModel)]="person.gender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="undisclosed">Undisclosed</option>
-                    </select>
-                    <button (click)="addPerson()">Add a new Person</button>
+                    <h2>Add A New Person</h2>
+                    <app-add-person [toaster]="toaster" [url]="url" (personAdded)="personAdded($event)">
+                    </app-add-person>
+
                 </div>
             </div>
         </div>
