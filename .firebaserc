@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fypqrf-b3259": {
+      "hosting": {
+        "client": [
+          "fypqrf-b3259"
+        ]
+      }
+    }
+  }
+}
