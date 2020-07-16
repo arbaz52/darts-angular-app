@@ -5,7 +5,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { TplapiService } from '../tplapi.service';
 import { ToasterService } from '../toaster.service';
 import { DialogData, TempDialogComponent } from '../temp-dialog/temp-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-suspect',

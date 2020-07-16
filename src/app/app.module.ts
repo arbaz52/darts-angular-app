@@ -1,4 +1,4 @@
-import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -50,7 +50,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CameraDetailsComponent } from './camera-details/camera-details.component';
 import { ServerDetailsComponent } from './server-details/server-details.component';
 
-import {MatChipsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, MatIconModule, MatDialogModule, MatSliderModule, GestureConfig} from '@angular/material/';
+import { MatChipsModule, MatFormFieldModule, MatInputModule, MatStepperModule, MatButtonModule, MatIconModule, MatDialogModule, MatSliderModule } from '@angular/material/';
 import { ChipperComponent } from './chipper/chipper.component';
 import { TempDialogComponent } from './temp-dialog/temp-dialog.component';
 import { AddPersonComponent } from './add-person/add-person.component';
@@ -148,7 +148,6 @@ const firebaseConfig: {} = {
     MatIconModule,
   ],
   providers: [
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}
   ],
   bootstrap: [AppComponent],
   entryComponents: [
