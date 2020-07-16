@@ -1,51 +1,76 @@
 <div id='container'>
     <div class='wrapper'>
         <h1>Welcome to Admin Dashboard</h1>
-        <div class='bar'>
-            <h1>Manage QRUnits</h1>
-            <div class='buttons'>
-                <button routerLink="../qrunits/add">Add QRUnit</button>
+        <div *ngIf="canManageQRUnits">
+            <div class='bar'>
+                <h1>Manage QRUnits</h1>
+                <div class='buttons'>
+                    <button routerLink="../qrunits/add">Add QRUnit</button>
+                </div>
             </div>
+            <table border="1" width="100%" style="text-align: center;">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Members</th>
+                    <th>Force Logout</th>
+                </tr>
+                <tr *ngFor="let qrunit of qrunits; let i = index">
+                    <td>{{qrunit._id}}</td>
+                    <td>{{qrunit.name}}</td>
+                    <td>{{qrunit.members.length}}</td>
+                    <td>
+                        <input type='checkbox' [checked]="qrunit.forceLogout" (change)="updateForceLogout(i, $event.target.checked)" />
+                    </td>
+                </tr>
+            </table>
+
         </div>
-        <div class='bar'>
-            <h1>Manage Cameras</h1>
-            <div class='buttons'>
-                <button routerLink="../cameras/autoassign">Auto Assign Cameras > Servers</button>
-                <button routerLink="../cameras/add">Add Camera</button>
+        <div *ngIf="canManageCameras">
+            <div class='bar'>
+                <h1>Manage Cameras</h1>
+                <div class='buttons'>
+                    <button routerLink="../cameras/autoassign">Auto Assign Cameras > Servers</button>
+                    <button routerLink="../cameras/add">Add Camera</button>
+                </div>
             </div>
-        </div>
-        <div class='search'>
-            <p>Search for cameras at location: </p>
-            <div class='search-bar'>
-                <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.cameras.query" (keyup.enter)="searchForCamerasAtLocation()" placeholder="Type location name" />
-                <button (click)="clearCamerasSearchQuery()">Clear</button>
+            <div class='search'>
+                <p>Search for cameras at location: </p>
+                <div class='search-bar'>
+                    <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.cameras.query" (keyup.enter)="searchForCamerasAtLocation()" placeholder="Type location name" />
+                    <button (click)="clearCamerasSearchQuery()">Clear</button>
+                </div>
             </div>
-        </div>
-        <div class='cameras'>
-            <div *ngIf="search.cameras.query != ''">
-                <div *ngIf="search.cameras.location != null">
-                    <h4>Cameras near location: </h4>
-                    <p>{{search.cameras.location.formatted}}</p>
+            <div class='cameras'>
+                <div *ngIf="search.cameras.query != ''">
+                    <div *ngIf="search.cameras.location != null">
+                        <h4>Cameras near location: </h4>
+                        <p>{{search.cameras.location.formatted}}</p>
+                        <div class='cameras-holder'>
+                            <app-camera-details *ngFor="let camera of search.cameras.cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="search.cameras.query == ''">
                     <div class='cameras-holder'>
-                        <app-camera-details *ngFor="let camera of search.cameras.cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
+                        <app-camera-details *ngFor="let camera of cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
                     </div>
                 </div>
             </div>
-            <div *ngIf="search.cameras.query == ''">
-                <div class='cameras-holder'>
-                    <app-camera-details *ngFor="let camera of cameras" routerLink="../cameras/{{camera._id}}" [camera]="camera"></app-camera-details>
+
+        </div>
+
+        <div *ngIf="canManageServers">
+            <div class='bar'>
+                <h1>Manage Servers</h1>
+                <div class='buttons'>
+                    <button routerLink="../servers/add">Add Server</button>
                 </div>
             </div>
-        </div>
-        <div class='bar'>
-            <h1>Manage Servers</h1>
-            <div class='buttons'>
-                <button routerLink="../servers/add">Add Server</button>
+            <div class='servers'>
+                <app-server-details *ngFor="let server of servers" [server]="server">
+                </app-server-details>
             </div>
-        </div>
-        <div class='servers'>
-            <app-server-details *ngFor="let server of servers" [server]="server">
-            </app-server-details>
         </div>
     </div>
 </div>

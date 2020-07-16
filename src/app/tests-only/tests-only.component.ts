@@ -14,6 +14,8 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./tests-only.component.css']
 })
 export class TestsOnlyComponent implements OnInit {
+  qrunitName: string = ""
+  isLinear: boolean = true;
   open(){
     var d: DialogData = {
       btnNo: "Delete",

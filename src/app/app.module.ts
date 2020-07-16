@@ -55,7 +55,8 @@ import { ChipperComponent } from './chipper/chipper.component';
 import { TempDialogComponent } from './temp-dialog/temp-dialog.component';
 import { AddPersonComponent } from './add-person/add-person.component';
 import { MapWithSearchComponent } from './map-with-search/map-with-search.component';
-import { AdjustPreprocessingComponent } from './adjust-preprocessing/adjust-preprocessing.component'
+import { AdjustPreprocessingComponent } from './adjust-preprocessing/adjust-preprocessing.component';
+import { QrunitDetailsComponent } from './qrunit-details/qrunit-details.component'
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
@@ -108,6 +109,7 @@ const firebaseConfig: {} = {
     AddPersonComponent,
     MapWithSearchComponent,
     AdjustPreprocessingComponent,
+    QrunitDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -136,12 +138,14 @@ const firebaseConfig: {} = {
 
     //material layout
     ,
+    MatStepperModule,
     MatFormFieldModule,
     MatChipsModule,
     MatInputModule,
     MatIconModule,
     MatDialogModule,
-    MatSliderModule
+    MatSliderModule,
+    MatIconModule,
   ],
   providers: [
     {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig}

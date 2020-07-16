@@ -121,4 +121,11 @@ export class AuthoritativeService {
   getAlert(alertId){
     return this.http.get(url+"authoritative/map/alert/"+alertId, httpOptions)
   }
+
+
+
+  
+  getCurrentAuthoritative() {
+    return this.http.get(url+"authoritative", httpOptions)
+  }
 }

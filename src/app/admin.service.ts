@@ -114,4 +114,16 @@ export class AdminService {
   updateCameraPreprocessingValues(cameraId: string, pre: {}){
     return this.http.put(url+"admin/cameras/"+cameraId+"/preprocessing", {pre}, httpOptions)
   }
+
+
+
+
+
+  getCurrentAdmin() {
+    return this.http.get(url+"admin", httpOptions)
+  }
+
+  getQRUnits(){
+    return this.http.get(url+"admin/qrunit", httpOptions)
+  }
 }

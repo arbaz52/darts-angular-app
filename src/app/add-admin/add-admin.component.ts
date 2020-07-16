@@ -10,6 +10,19 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./add-admin.component.css']
 })
 export class AddAdminComponent implements OnInit {
+  isLinear = true;
+  privSelected = false;
+  updatePriv(i, yn) {
+    this.priv[i].checked = yn
+    this.privSelected = false
+    this.priv.forEach(p => {
+      if (p.checked)
+        this.privSelected = true
+    })
+  }
+
+  _p: string[] = ["manage qrunits", "manage cameras", "manage servers"]
+  
   url: string = "https://darts-web-server.herokuapp.com/authoritative/admin/person/"
   priv: any[] = [{
     name: "manage servers",
@@ -50,6 +63,14 @@ export class AddAdminComponent implements OnInit {
   constructor(private authoritativeService: AuthoritativeService, private router: Router, private toaster: ToasterService) { }
 
   ngOnInit() {
+    
+    this.priv = []
+    this._p.forEach(p => {
+      this.priv.push({
+        name: p,
+        checked: false
+      })
+    })
 
     this.uploader = new FileUploader({
       url: "http://localhost:3000/authoritative/admin/person/",
@@ -132,11 +153,11 @@ export class AddAdminComponent implements OnInit {
 
   }
 
-  
+
   addAdmin = () => {
     this.admin.privileges = []
     for (var i = 0; i < this.priv.length; i++) {
-      if(this.priv[i].checked){
+      if (this.priv[i].checked) {
         this.admin.privileges.push(this.priv[i].name)
       }
     }
@@ -163,5 +184,5 @@ export class AddAdminComponent implements OnInit {
     this.people.push(person)
     this.selectPerson(person, 0);
   }
-  
+
 }

@@ -8,6 +8,18 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./authoritative-home.component.css']
 })
 export class AuthoritativeHomeComponent implements OnInit {
+  currentAP: {} = {}
+  canAddAdmins: boolean = false
+  canAddAP: boolean = false
+  canManageSuspects: boolean = false
+  canViewMap: boolean = false
+  hasPermission(priv, perm) {
+    var can = false;
+    priv.forEach(p => {
+      can = can || p == perm || p == 'all'
+    })
+    return can
+  }
 
 
   //implementing searching of suspects
@@ -76,14 +88,37 @@ export class AuthoritativeHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.search = {
-      suspects: {
-        query: "",
-        suspects: []
+
+    this.authoritativeService.getCurrentAuthoritative().subscribe((data: any) => {
+      if (data.err) {
+        this.toaster.err(data.err)
+      } else {
+        this.currentAP = data.authoritative
+        console.log(this.currentAP)
+        this.canAddAdmins = this.hasPermission(data.authoritative.privileges, 'add admins')
+        this.canAddAP = this.hasPermission(data.authoritative.privileges, 'add authoritative people')
+        this.canManageSuspects = this.hasPermission(data.authoritative.privileges, 'manage suspects')
+        this.canViewMap = this.hasPermission(data.authoritative.privileges, 'view map')
+        this.nowInit()
       }
-    }
-    this.getSuspects()
+    },
+      (err) => {
+        this.toaster.err(err)
+      })
+
+
+
 
   }
-
+  nowInit(){
+    if(this.canManageSuspects){
+      this.search = {
+        suspects: {
+          query: "",
+          suspects: []
+        }
+      }
+      this.getSuspects()
+    }
+  }
 }

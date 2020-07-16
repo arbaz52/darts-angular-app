@@ -2,9 +2,9 @@
     <div class='wrapper'>
         <h1>Welcome to Authoritative Dashboard</h1>
         <div class='big-banner'>
-            <button class='button green' routerLink="./../map">Open Map</button>
-            <button class='button green' routerLink="./../admins/add">Add Admin</button>
-            <button class='button green' routerLink="./../authoritative/add">Add Authoritative Person</button>
+            <button *ngIf="canViewMap" class='button green' routerLink="./../map">Open Map</button>
+            <button *ngIf="canAddAdmins" class='button green' routerLink="./../admins/add">Add Admin</button>
+            <button *ngIf="canAddAP" class='button green' routerLink="./../authoritative/add">Add Authoritative Person</button>
         </div>
 
 
@@ -20,30 +20,32 @@
             </div>
         </div>
          -->
-        <div class='bar'>
-            <h1>Manage Suspects</h1>
-            <div class='buttons'>
-                <button routerLink="../suspects/add">Add Suspect</button>
+        <div *ngIf="canManageSuspects">
+            <div class='bar'>
+                <h1>Manage Suspects</h1>
+                <div class='buttons'>
+                    <button routerLink="../suspects/add">Add Suspect</button>
+                </div>
             </div>
-        </div>
 
-        <div class='search' *ngIf="search.suspects.query != null">
-            <p>Search for Suspects: </p>
-            <div class='search-bar'>
-                <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.suspects.query" (keyup.enter)="searchForSuspects()" placeholder="Type search query" />
-                <button (click)="clearSuspectsSearchQuery()">Clear</button>
+            <div class='search' *ngIf="search.suspects.query != null">
+                <p>Search for Suspects: </p>
+                <div class='search-bar'>
+                    <input type='search' (focus)="toaster.info('Press enter to search!')" [(ngModel)]="search.suspects.query" (keyup.enter)="searchForSuspects()" placeholder="Type search query" />
+                    <button (click)="clearSuspectsSearchQuery()">Clear</button>
+                </div>
             </div>
-        </div>
 
-        <div *ngIf="search.suspects.query != ''">
-            <h4>Suspects fitting search query ' {{search.suspects.query}} ': </h4>
-            <div class='suspects'>
-                <app-suspect-details *ngFor="let suspect of search.suspects.suspects" routerLink="../suspects/{{suspect._id}}" [suspect]="suspect"></app-suspect-details>
+            <div *ngIf="search.suspects.query != ''">
+                <h4>Suspects fitting search query ' {{search.suspects.query}} ': </h4>
+                <div class='suspects'>
+                    <app-suspect-details *ngFor="let suspect of search.suspects.suspects" routerLink="../suspects/{{suspect._id}}" [suspect]="suspect"></app-suspect-details>
+                </div>
             </div>
-        </div>
-        <div *ngIf="search.suspects.query == ''" class='suspects'>
-            <div *ngFor="let suspect of suspects" routerLink="../suspects/{{suspect._id}}">
-                <app-suspect-details [suspect]="suspect"></app-suspect-details>
+            <div *ngIf="search.suspects.query == ''" class='suspects'>
+                <div *ngFor="let suspect of suspects" routerLink="../suspects/{{suspect._id}}">
+                    <app-suspect-details [suspect]="suspect"></app-suspect-details>
+                </div>
             </div>
         </div>
     </div>

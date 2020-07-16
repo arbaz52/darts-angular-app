@@ -10,6 +10,10 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./add-qrunit.component.css']
 })
 export class AddQrunitComponent implements OnInit {
+  isLinear: boolean = true
+
+
+
   name: string = "";
   url: string = "https://darts-web-server.herokuapp.com/admin/qrunit/person/"
   person: {

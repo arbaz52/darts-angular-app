@@ -2,51 +2,65 @@
     <div class='wrapper'>
         <!-- <p>add-admin works!</p> -->
         <h1>Add an Admin</h1>
-        <h2>Select Person</h2>
-        <div>
-            <div id='available-admins'>
-                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Available People
-                </h3>
-                <div *ngIf="admin.personId == ''">
-                    <p>Click to select the person</p>
+        <mat-vertical-stepper [linear]="isLinear">
+            <mat-step label="Select the person" [completed]="admin.personId != ''">
+                <mat-horizontal-stepper>
+                    <mat-step label="Select from available people">
 
-                    <div class='person-holder'>
-                        <!-- available people -->
-                        <div *ngFor="let p of people; let i = index" (click)="selectPerson(p, i)" title="p.fullName">
-                            <!-- <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}} -->
-                            <app-person-details [person]="p"></app-person-details>
+                        <div id='available-admins'>
+                            <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Available People
+                            </h3>
+                            <div *ngIf="admin.personId == ''">
+                                <p>Click to select the person</p>
+
+                                <div class='person-holder'>
+                                    <!-- available people -->
+                                    <div *ngFor="let p of people; let i = index" (click)="selectPerson(p, i)" title="p.fullName">
+                                        <!-- <img src="{{p.picture_url}}" /> {{p._id}} {{p.fullName}} {{p.gender}} {{p.picture_url}} -->
+                                        <app-person-details [person]="p"></app-person-details>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Add a person
-                </h3>
-                <div *ngIf="admin.personId == ''">
-                    <h2>Add A New Person</h2>
-                    <app-add-person [toaster]="toaster" [url]="url" (personAdded)="personAdded($event)">
-                    </app-add-person>
+                    </mat-step>
+                    <mat-step label="Person does not exist in the database">
 
-                </div>
-            </div>
-        </div>
-        <h2>Privileges</h2>
-        <div>
-            <div *ngFor="let p of priv; let i = index">
-                <input type='checkbox' name="pri" value="{{p.name}}" (change)="priv[i].checked = $event.target.checked;" /> - {{p.name}}
-            </div>
-        </div>
+                        <div>
+                            <h3 [class.done]="admin.personId != ''" [class.ion-checkmark-circled]="admin.personId != ''">Add a person
+                            </h3>
+                            <div *ngIf="admin.personId == ''">
+                                <app-add-person [toaster]="toaster" [url]="url" (personAdded)="personAdded($event)">
+                                </app-add-person>
 
-        <h2>Login Credentials</h2>
-        <p>Password will be emailed to the owner of this account!</p>
-        <div>
-            <h4>Person Selected: {{personSelected.fullName}} <button class='button' (click)="resetSelection()">Reset
-                    Selection</button></h4>
-        </div>
-        <div>
-            <label for="">*Email Address</label>
-            <input type='email' placeholder="Email Address" [(ngModel)]="admin.email" />
-            <button class=" button " (click)="addAdmin() ">Add this admin</button>
-        </div>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+                <button *ngIf="admin.personId != ''" class='button red' (click)="resetSelection()">Choose a different person</button>
+                <button *ngIf="admin.personId != ''" matStepperNext>Next</button>
+            </mat-step>
+            <mat-step label="Select Privileges" [completed]="privSelected">
+                <h2>Privileges</h2>
+                <div *ngFor="let p of priv; let i = index" style="display: grid; grid-template-columns: 1fr 5fr; width: 200px">
+                    <input type='checkbox' name="pri" id="{{'check_'+p.name}}" value="{{p.name}}" (change)="updatePriv(i, $event.target.checked)" />
+                    <label for="{{'check_'+p.name}}" style='cursor: pointer;'> {{p.name}}</label>
+                </div>
+                <br />
+                <button *ngIf="privSelected" matStepperNext>Next</button>
+            </mat-step>
+            <mat-step label="Login Credentials">
+                <h2>Login Credentials</h2>
+                <p>Password will be emailed to the owner of this account!</p>
+                <div>
+                    <h4>Person Selected: {{personSelected.fullName}}</h4>
+                </div>
+                <div>
+                    <label for="">*Email Address</label>
+                    <input type='email' placeholder="Email Address" [(ngModel)]="admin.email" />
+                    <button class=" button " (click)="addAdmin() ">Add this admin</button>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
+
     </div>
 </div>

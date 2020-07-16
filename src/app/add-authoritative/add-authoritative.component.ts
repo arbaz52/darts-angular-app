@@ -10,7 +10,18 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./add-authoritative.component.css']
 })
 export class AddAuthoritativeComponent implements OnInit {
-
+  isLinear = true;
+  privSelected = false;
+  updatePriv(i, yn) {
+    this.priv[i].checked = yn
+    this.privSelected = false
+    this.priv.forEach(p => {
+      if (p.checked)
+        this.privSelected = true
+    })
+  }
+  _p: string[] = ["add admins", "add authoritative people", "manage suspects", "view map"]
+  
   priv: any[] = [{
     name: "manage suspects",
     checked: false
@@ -51,6 +62,13 @@ export class AddAuthoritativeComponent implements OnInit {
   constructor(private authoritativeService: AuthoritativeService, private router: Router, private toaster:ToasterService) { }
 
   ngOnInit() {
+    this.priv = []
+    this._p.forEach(p => {
+      this.priv.push({
+        name: p,
+        checked: false
+      })
+    })
 
     this.uploader = new FileUploader({
       url: "http://localhost:3000/authoritative/admin/person/",

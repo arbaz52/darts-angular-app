@@ -1,4 +1,7 @@
 <div id='container'>
+    <div class='wrapper'>
+        <app-qrunit-details></app-qrunit-details>
+    </div>
     <div class="wrapper">
         <button (click)="open()">Click to open dialog</button>
     </div>
@@ -6,5 +9,20 @@
         <h1>Testing map with navigation</h1>
         {{location | json}}
         <app-map-with-search (locationSelected)="location=$event"></app-map-with-search>
+    </div>
+    <div class='wrapper'>
+        <mat-vertical-stepper [linear]="isLinear">
+            <mat-step [completed]="qrunitName != null && qrunitName !=''" label=" Step 1x ">
+                Step 1
+                <input type='text' [(ngModel)]="qrunitName " matInput required/>
+                <button *ngIf="qrunitName != null && qrunitName !='' " matStepperNext>Next</button>
+            </mat-step>
+            <mat-step label="Step 2x ">
+                Step 2
+            </mat-step>
+            <mat-step label="Step 3x ">
+                Step 3
+            </mat-step>
+        </mat-vertical-stepper>
     </div>
 </div>

@@ -15,4 +15,16 @@ export class FirebasedatabaseService {
   getAlerts = () => {
     return this._db.object("/Alerts").valueChanges()
   }
+
+  getForceLogouts = () => {
+    return this._db.object("/forcelogout").valueChanges()
+  }
+
+
+  addForceLogoutEntry = (_id) => {
+    return this._db.object("/forcelogout/"+_id).set(true)
+  }
+  removeForceLogoutEntry= (_id) => {
+    return this._db.object("/forcelogout/"+_id).remove()
+  }
 }
