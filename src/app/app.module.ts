@@ -57,6 +57,12 @@ import { AddPersonComponent } from './add-person/add-person.component';
 import { MapWithSearchComponent } from './map-with-search/map-with-search.component';
 import { AdjustPreprocessingComponent } from './adjust-preprocessing/adjust-preprocessing.component';
 import { QrunitDetailsComponent } from './qrunit-details/qrunit-details.component'
+import { FocusMonitor, FocusTrapFactory, InteractivityChecker } from '@angular/cdk/a11y';
+import { Platform } from '@angular/cdk/platform';
+import { ScrollStrategyOptions, ScrollDispatcher, ViewportRuler, OverlayContainer, OverlayPositionBuilder, OverlayKeyboardDispatcher } from '@angular/cdk/overlay';
+import { Directionality } from '@angular/cdk/bidi';
+import { ContentObserver } from '@angular/cdk/observers';
+import { AutofillMonitor } from '@angular/cdk/text-field';
 
 const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
@@ -148,6 +154,19 @@ const firebaseConfig: {} = {
     MatIconModule,
   ],
   providers: [
+    FocusMonitor,
+    Platform,
+    ScrollStrategyOptions,
+    ScrollDispatcher,
+    ViewportRuler,
+    OverlayContainer,
+    OverlayPositionBuilder,
+    OverlayKeyboardDispatcher,
+    Directionality,
+    ContentObserver,
+    FocusTrapFactory,
+    InteractivityChecker,
+    AutofillMonitor
   ],
   bootstrap: [AppComponent],
   entryComponents: [

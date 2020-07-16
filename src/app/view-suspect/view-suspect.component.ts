@@ -6,11 +6,13 @@ import { TplapiService } from '../tplapi.service';
 import { ToasterService } from '../toaster.service';
 import { DialogData, TempDialogComponent } from '../temp-dialog/temp-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-view-suspect',
   templateUrl: './view-suspect.component.html',
-  styleUrls: ['./view-suspect.component.css']
+  styleUrls: ['./view-suspect.component.css'],
+  providers: [OverlayContainer]
 })
 export class ViewSuspectComponent implements OnInit {
   //dialog
