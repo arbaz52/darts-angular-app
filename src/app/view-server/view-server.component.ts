@@ -49,6 +49,7 @@ export class ViewServerComponent implements OnInit {
   }
 
   updateServer = () => {
+    this.toaster.info("Updating server information")
     this.adminService.updateServer(this.serverId, this.server).subscribe(
       (data: any) => {
         if(data.err){
@@ -66,6 +67,7 @@ export class ViewServerComponent implements OnInit {
     )
   }
   deleteServer = () => {
+    this.toaster.info("Deleting server")
     this.adminService.deleteServer(this.serverId).subscribe(
       (data: any) => {
         if(data.err){

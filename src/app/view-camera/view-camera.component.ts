@@ -80,6 +80,7 @@ export class ViewCameraComponent implements OnInit {
   }
 
   updateCamera = () => {
+    this.toaster.info("Updating camera information")
     this.adminService.updateCamera(this.cameraId, this.camera).subscribe(
       (data: any) => {
         if(data.err){
@@ -97,6 +98,7 @@ export class ViewCameraComponent implements OnInit {
     )
   }
   deleteCamera = () => {
+    this.toaster.info("Deleting camera")
     this.adminService.deleteCamera(this.cameraId).subscribe(
       (data: any) => {
         if(data.err){
