@@ -27,7 +27,7 @@ export class AdjustPreprocessingComponent implements OnInit {
     this.adminService.getCameraPreprocessingValues(this.cameraId).subscribe(
       (data: any) => {
         if (data.err) {
-          this.toaster.err(data)
+          this.toaster.err(data.err)
         } else {
 
           if (data.pre.brightness)
