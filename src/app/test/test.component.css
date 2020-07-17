@@ -33,3 +33,21 @@
 .search-suggestion:hover {
     background: #aaa;
 }
+
+.main-holder {
+    display: flex;
+}
+
+.location-on-map {
+    flex: 1;
+    height: 80vh;
+}
+
+.helper {
+    background: white;
+    width: 0px;
+}
+
+.help.show {
+    width: auto;
+}

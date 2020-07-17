@@ -12,6 +12,7 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
+  showActionBar: boolean = false;
 
   viewLiveFeed = (camera) => {
     console.log('working')

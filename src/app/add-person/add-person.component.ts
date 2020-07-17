@@ -55,7 +55,8 @@ export class AddPersonComponent implements OnInit {
     this.uploader = new FileUploader({
       url: this.url,
       method: "POST",
-      itemAlias: "picture"
+      itemAlias: "picture",
+      headers: [{name:'Accept', value:'application/json'}]
     });
     this.uploader.response.subscribe(
       (data) => {

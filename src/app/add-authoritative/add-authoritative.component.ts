@@ -10,6 +10,7 @@ import { ToasterService } from '../toaster.service';
   styleUrls: ['./add-authoritative.component.css']
 })
 export class AddAuthoritativeComponent implements OnInit {
+  url: string = "https://darts-web-server.herokuapp.com/authoritative/authoritative/person"
   isLinear = true;
   privSelected = false;
   updatePriv(i, yn) {

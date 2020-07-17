@@ -1,5 +1,8 @@
 <div id='container'>
-    <div class='wrapper'>
+    <div class='wrapper' style='text-align:center; padding: 20px 0; display: flex; flex-direction: column-reverse;'>
+        <button (click)="showActionBar = !showActionBar">Toggle Action Bar</button>
+    </div>
+    <div class='wrapper main-holder'>
 
         <agm-map (mapClick)="choseThisLocation($event)" class='location-on-map' [latitude]="comsats.latitude" [longitude]="comsats.longitude" [zoom]="16">
             <div *ngIf="filter.qrunits">
@@ -37,56 +40,65 @@
                 </agm-polyline>
             </div>
         </agm-map>
-        <div>
-            <h2>Visible on map</h2>
-            <div class='filters-holder'>
-                <div *ngFor="let item of filter_keys">
-                    <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item | titlecase}}
+        <mat-vertical-stepper class='helper' [className]="showActionBar ? 'show' : 'hide'">
+            <mat-step label="What to show on map">
+
+                <h2>Visible on map</h2>
+                <div class='filters-holder'>
+                    <div *ngFor="let item of filter_keys">
+                        <input type='checkbox' checked="Yes" (change)="filter[item] = $event.target.checked"> - {{item | titlecase}}
+                    </div>
+                    <div>
+                        <input type='checkbox' checked="Yes" (change)="showRealTimeOperations = $event.target.checked"> - Show ongoing operations
+                    </div>
                 </div>
+            </mat-step>
+            <mat-step label="Search for locations">
+
+                <h2>Search for locations</h2>
                 <div>
-                    <input type='checkbox' checked="Yes" (change)="showRealTimeOperations = $event.target.checked"> - Show ongoing operations
+                    <p>Search for places</p>
+                    <input type='search' [(ngModel)]="search.query" (keyup.enter)="searchLocation(search.query)" />
+                    <button (click)="searchLocation(search.query)">Search</button>
+                    <ul class='search-suggestions-holder'>
+                        <li class='search-suggestion' *ngFor="let item of search.results" (click)="moveMapOver(item.geometry)">
+                            <div><b>{{item.formatted}}</b></div>
+                            <div>lat: {{item.geometry.lat}}, lng: {{item.geometry.lng}}</div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
-            <h2>Search for locations</h2>
-            <div>
-                <p>Search for places</p>
-                <input type='search' [(ngModel)]="search.query" (keyup.enter)="searchLocation(search.query)" />
-                <button (click)="searchLocation(search.query)">Search</button>
-                <ul class='search-suggestions-holder'>
-                    <li class='search-suggestion' *ngFor="let item of search.results" (click)="moveMapOver(item.geometry)">
-                        <div><b>{{item.formatted}}</b></div>
-                        <div>lat: {{item.geometry.lat}}, lng: {{item.geometry.lng}}</div>
-                    </li>
-                </ul>
-            </div>
-            <h2>Move map over:</h2>
-            <div>
-                <p>QRUnits: </p>
-                <select (change)="showQRUnit($event.target.value)">
-                    <option value=""></option>
-                    <option *ngFor="let item of qrunits" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
-                </select>
+            </mat-step>
+            <mat-step label="Navigate map over an entity">
 
-                <p>Cameras: </p>
-                <select (change)="showUnitOnMap($event.target.value, cameras)">
-                    <option value=""></option>
-                    <option *ngFor="let item of cameras" value="{{item._id}}">{{item._id}}</option>
-                </select>
+                <h2>Move map over:</h2>
+                <div>
+                    <p>QRUnits: </p>
+                    <select (change)="showQRUnit($event.target.value)">
+                        <option value=""></option>
+                        <option *ngFor="let item of qrunits" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
+                    </select>
 
-                <p>Servers: </p>
-                <select (change)="showUnitOnMap($event.target.value, servers)">
-                    <option value=""></option>
-                    <option *ngFor="let item of servers" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
-                </select>
+                    <p>Cameras: </p>
+                    <select (change)="showUnitOnMap($event.target.value, cameras)">
+                        <option value=""></option>
+                        <option *ngFor="let item of cameras" value="{{item._id}}">{{item._id}}</option>
+                    </select>
 
-                <p>Alerts: </p>
-                <select (change)="showUnitOnMap($event.target.value, alerts)">
-                    <option value=""></option>
-                    <option *ngFor="let item of alerts" value="{{item._id}}">{{item.suspectId.fullName}} - {{item.time}}
-                    </option>
-                </select>
-            </div>
-        </div>
+                    <p>Servers: </p>
+                    <select (change)="showUnitOnMap($event.target.value, servers)">
+                        <option value=""></option>
+                        <option *ngFor="let item of servers" value="{{item._id}}">{{item.name}} - {{item._id}}</option>
+                    </select>
+
+                    <p>Alerts: </p>
+                    <select (change)="showUnitOnMap($event.target.value, alerts)">
+                        <option value=""></option>
+                        <option *ngFor="let item of alerts" value="{{item._id}}">{{item.suspectId.fullName}} - {{item.time}}
+                        </option>
+                    </select>
+                </div>
+            </mat-step>
+        </mat-vertical-stepper>
         <!-- 
         <h2>Firebase Items</h2>
         <ul>

@@ -5,7 +5,7 @@
         <h1>Add an Authoritative Person</h1>
         <mat-vertical-stepper [linear]="isLinear">
             <mat-step label="Select the person" [completed]="ap.personId != ''">
-                <mat-horizontal-stepper>
+                <mat-horizontal-stepper #personSelectorStepper>
                     <mat-step label="Select from available people">
 
                         <div id='available-aps'>
