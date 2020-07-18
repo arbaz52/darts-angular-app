@@ -21,7 +21,7 @@
                     </div>
 
                     <div *ngIf="videoOrigin == 'server'">
-                        <img src="{{server.url + '/camera/' + camera._id}}" (error)="validServerVideoUrl=false" *ngIf="validServerVideoUrl" />
+                        <img src="{{server.url + (server.url.length>0 && server.url[server.url.length-1]=='/'?'':'/') + 'camera/' + camera._id}}" (error)="validServerVideoUrl=false" *ngIf="validServerVideoUrl" />
                         <div style='margin: 30px 0' class='error' *ngIf="!validServerVideoUrl">Server streaming unavailable for this camera - check url and make sure server is running</div>
                     </div>
 
